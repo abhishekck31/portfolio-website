@@ -10,7 +10,7 @@ export const DATA = {
   description:
   "B.Tech student and aspiring Software Engineer focused on Data Structures & Algorithms and full-stack development. I build modern, scalable web applications using JavaScript, React, Next.js, and backend tools, with a strong focus on clean UI and performance.",
 summary:
-  "Aspiring Software Engineer currently in 6th semester, preparing for top-tier placements. Actively solving DSA problems daily and building real-world projects like SaaS platforms, hackathon products, and business websites. Passionate about full-stack development, system design fundamentals, and building impactful tech products.",
+  "Aspiring Software Engineer currently in 6th semester. Actively solving DSA problems daily and building real-world projects like SaaS platforms and business websites. Passionate about full-stack development, system design fundamentals, and building impactful tech products.",
   avatarUrl: "/me.png",
   skills: [
     "Machine Learning",
@@ -72,38 +72,38 @@ summary:
 
   work: [
     {
-      company: "Munshot",
+      company: "Refurbo",
       badges: [],
-      href: "https://munshot.com",
+      href: "https://refurbo.in/",
       location: "Remote",
-      title: "Artificial Intelligence Intern",
-      logoUrl: "/munshotlogo.png",
-      start: "August 2025",
-      end: "September 2025",
+      title: "Software Engineering Intern",
+      logoUrl: "/refurbo.png",
+      start: "January 2026",
+      end: "Present",
       description:
-        "• Developed an AI agent for Singapore-based financial services client\n• Worked with multi-agent AI workflows for context-sharing and coordination\n• Designed prompting logic including system prompts for task execution\n• Tested, debugged, and refined agent performance",
+        "• Working on real-world frontend features and bug fixes in a product-based environment.\n• Debugged complex UI rendering issues, including incorrect image mapping after sorting and filtering operations. \n• Collaborated using Git & GitHub, handling pull requests, code updates, and clean commit practices.\n• Focused on performance, clean UI, and maintainable code rather than quick fixes",
     },
     {
-      company: "Computer Market Hub",
-      href: "https://computermarkethub.com",
+      company: "Unacademy",
+      href: "https://unacademy.com/",
       badges: [],
-      location: "Remote",
-      title: "Artificial Intelligence Intern",
-      logoUrl: "/cmhlogo.jpeg",
-      start: "August 2024",
-      end: "December 2024",
+      location: "Onsite",
+      title: "Operations Analyst Intern",
+      logoUrl: "/unacademy.png",
+      start: "June 2025",
+      end: "July 2025",
       description:
-        "• Spearheaded Jess chatbot for Jessup Cellars, achieving 78% user satisfaction\n• Orchestrated data pipelines processing 2K+ daily data points, improving model performance by 40%\n• Architected AI sentiment analysis system processing 5K+ Hebrew posts with 87% accuracy\n• Delivered 3 specialized AI agents, reducing manual processing time by 35%",
+        "• Engineered a Flask API & Google Apps Script system to fully automate student performance reporting, saving 95%+ in manual work.\n•  Built a custom internal tool with Retool to manage and streamline the entire YouTube content publishing pipeline, improving team efficiency.\n• Automated competitor analysis using Python (Web Scraping) and conducted data analysis on 500+ videos to optimize content strategy.",
     },
   ],
   education: [
     {
-      school: "Baderia Global Institute of Engineering and Management",
+      school: "CMR University",
       href: "",
-      degree: "Bachelor of Technology in Computer Science",
-      logoUrl: "/RGPVLOGO.jpeg",
-      start: "2021",
-      end: "2025",
+      degree: "Bachelor of Technology in Information Technology",
+      logoUrl: "/cmru.png",
+      start: "2023",
+      end: "2027",
     },
   ],
   projects: [
