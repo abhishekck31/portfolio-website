@@ -122,10 +122,9 @@ export default function Page() {
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
                   Check out my latest work
                 </h2>
-                <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  I&apos;ve worked on a variety of AI/ML projects, from memory
-                  systems to workflow automation platforms. Here are a few of my
-                  favorites.
+                <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-md/relaxed">
+                  I've developed production-ready web platforms, AI-powered applications, and automation systems delivering 
+                  responsive user experiences, scalable backend systems, and measurable efficiency improvements.
                 </p>
               </div>
             </div>
