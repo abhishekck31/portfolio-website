@@ -138,138 +138,37 @@ export const DATA = {
       video: "",
     },
     {
-      title: "AIxAI",
-      href: "https://github.com/samiksha0shukla/AIxAI",
+      title: "Roomit",
+      href: "https://github.com/abhishekck31/roomit",
       //dates: "2024",
       active: true,
       description:
-        "MCP-powered system that generates Pydantic AI agents using multi-agent LangGraph workflows. Crawls and chunks docs, stores in Supabase with OpenAI embeddings. Provides semantic search and RAG-based answers.",
+        "Roomit is an AI-powered SaaS application that transforms 2D interior floor plans into photorealistic 3D architectural renders. Built with React and powered by Puter.js for authentication, serverless workers, cloud storage, and AI model integration (Claude & Gemini), the platform enables instant visualization, persistent hosting, and secure project management.",
       technologies: [
-        "Agentic AI",
-        "MultiAgent Workflow",
-        "Pydantic AI",
-        "LangGraph",
-        "Supabase",
-        "Agentic RAG",
-        "MCP",
-        "Python",
+        "React",
+        "TypeScript",
+        "Vite",
+        "TailwindCSS",
+        "Puter.js",
+        "Claude",
+        "Gemini",
+        "Vercel",
       ],
       links: [
         {
           type: "Website",
-          href: "https://aixai-mkfm.onrender.com/",
+          href: "https://roomithost.vercel.app/",
           icon: <Icons.globe className="size-3" />,
         },
         {
           type: "Source",
-          href: "https://github.com/samiksha0shukla/AIxAI",
+          href: "https://github.com/abhishekck31/roomit",
           icon: <Icons.github className="size-3" />,
         },
       ],
       image: "",
       video: "",
-    },
-    {
-      title: "HomeSage",
-      href: "https://github.com/samiksha0shukla/HomeSage",
-      //dates: "2024",
-      active: true,
-      description:
-        "Smart companion for real estate price prediction and analytics. Leverages ML for accurate predictions and personalized property recommendations.",
-      technologies: [
-        "Python",
-        "Machine Learning",
-        "Data Analytics",
-        "Data Visualization",
-        "Data Engineering",
-        "Feature Engineering",
-        "EDA",
-        "Prediction Models",
-      ],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/samiksha0shukla/HomeSage",
-          icon: <Icons.github className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "",
-    },
-    {
-      title: "n8n",
-      href: "https://github.com/samiksha0shukla/n8n",
-      //dates: "2024",
-      active: true,
-      description:
-        "Visual workflow automation platform built with React and FastAPI. Design, connect, and automate workflows in real time with a drag-and-drop interface.",
-      technologies: [
-        "React",
-        "FastAPI",
-        "Pydantic",
-        "SQLAlchemy",
-        "Python",
-        "Workflow Automation",
-        "Real-time",
-      ],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/samiksha0shukla/n8n",
-          icon: <Icons.github className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "",
-    },
-    {
-      title: "Transformers Research",
-      href: "https://arxiv.org/pdf/1706.03762",
-      active: true,
-      description:
-        "Deep dive into 'Attention Is All You Need' paper. Implementing transformer architecture from scratch, studying self-attention mechanisms and positional encodings.",
-      technologies: [
-        "PyTorch",
-        "Transformers",
-        "Self-Attention",
-        "NLP",
-        "Deep Learning",
-        "Research",
-      ],
-      links: [
-        {
-          type: "Paper",
-          href: "https://arxiv.org/pdf/1706.03762",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "",
-    },
-    {
-      title: "Tiny Recursive Model",
-      href: "https://arxiv.org/pdf/2510.04871",
-      active: true,
-      description:
-        "Researching efficient recursive model architectures and parameter-efficient approaches for LLMs. Exploring recursive computation and memory optimization in neural networks.",
-      technologies: [
-        "PyTorch",
-        "LLMs",
-        "Model Optimization",
-        "Recursive Networks",
-        "Deep Learning",
-        "Research",
-      ],
-      links: [
-        {
-          type: "Paper",
-          href: "https://arxiv.org/pdf/2510.04871",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "",
-    },
+    }
   ],
   hackathons: [
     {
