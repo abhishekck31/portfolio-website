@@ -123,7 +123,7 @@ export default function Page() {
                   Check out my latest work
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-md/relaxed">
-                  I've developed production-ready web platforms, AI-powered applications, and automation systems delivering 
+                  I've developed production-ready web platforms, AI-powered applications, and automation systems delivering
                   responsive user experiences, scalable backend systems, and measurable efficiency improvements.
                 </p>
               </div>
@@ -162,8 +162,8 @@ export default function Page() {
                   I like building things
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Solving real-world problems with innovative tech, from IoT
-                  systems to blockchain applications.
+                  I build reliable and scalable software.
+                  Driven by problem-solving and strong engineering principles.
                 </p>
               </div>
             </div>
