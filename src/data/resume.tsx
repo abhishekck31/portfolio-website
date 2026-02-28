@@ -172,7 +172,7 @@ export const DATA = {
   ],
   hackathons: [
     {
-      title: "Smart India Hackathon (SIH)",
+      title: "Alog-Rythm 2.0",
       dates: "August 25th - 26th, 2022",
       location: "India",
       description:
