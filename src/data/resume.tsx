@@ -173,21 +173,31 @@ export const DATA = {
   hackathons: [
     {
       title: "Alog-Rythm 2.0",
-      dates: "August 25th - 26th, 2022",
-      location: "India",
+      dates: "March 27th - 28th, 2025",
+      location: "Gopalan College of Engineering",
       description:
-        "Represented 6-member team in designing IoT-based Sewage Problem Alert system, securing top finalist position among 30,000+ participating teams. Developed a comprehensive solution for real-time sewage monitoring and alerting.",
-      image: "/SIH2.webp",
+        "From an idea to execution, Prajwal G and I built something that stood out—and it paid off! 🏆 We clinched 1st place in the Web Crafting - Alog-Rythm2.0 event at Gopalan College of Engineering! The competition was intense, and every team brought their A-game, but our approach to design, functionality, and execution helped us take the top spot.A great experience, a solid learning curve, and a reminder that clean, well-thought-out development always wins.",
+      image: "/",
       links: [],
     },
     {
-      title: "Hack JKLU",
-      dates: "March 3rd - 4th, 2023",
-      location: "India",
+      title: "SJCIT CSE Technotsava Hackathon",
+      dates: "April 3rd 2025",
+      location: "SJCIT Chikkaballapura",
       description:
-        "Conceptualised and prototyped Blockchain-based eVault system with 256-bit encryption, earning 3rd place recognition for innovation. Built a secure digital vault solution leveraging blockchain technology for enhanced data protection.",
-      image: "/jklulogo.jpg",
-      win: "3rd Place Winner",
+        "We secured 1st place in the Frontend Track at the SJCIT CSE Technotsava Hackathon! Me and Prajwal G built Timeline Explorer, a tool designed to visualize events and milestones in a clean, interactive way. It was exciting to bring the idea to life within the hackathon timeframe and see it resonate with the judges.",
+      image: "/",
+      win: "1st Place Winner",
+      links: [],
+    },
+    {
+      title: "Silver Spectrum Techfest-2025",
+      dates: "October 2025",
+      location: "New Horizon College of Engineering",
+      description:
+        "Won 1st Place and a cash prize of ₹10,000 in the Coding Contest at Silver Spectrum Techfest-2025!It was a fantastic challenge that tested our problem-solving skills. A huge thank you to New Horizon College of Engineering for the opportunity!",
+      image: "/",
+      win: "1st Place Winner",
       links: [],
     },
   ],
