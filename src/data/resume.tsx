@@ -92,7 +92,7 @@ export const DATA = {
       badges: [],
       location: "Onsite",
       title: "Operations Analyst Intern",
-      logoUrl: "/unacademy.png",
+      logoUrl: "/Unacademy.png",
       start: "June 2025",
       end: "July 2025",
       description:
