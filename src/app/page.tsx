@@ -1,3 +1,4 @@
+"use client";
 import { HackathonCard } from "@/components/hackathon-card";
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
@@ -8,6 +9,62 @@ import { Badge } from "@/components/ui/badge";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
+
+import { useState } from "react";
+import DownloadButton from "@/components/ui/button-download";
+
+function DownloadResumeButton() {
+  const [downloadStatus, setDownloadStatus] = useState<"idle" | "downloading" | "downloaded" | "complete">("idle")
+  const [progress, setProgress] = useState(0)
+
+  const handleDownload = async () => {
+    setDownloadStatus("downloading")
+    setProgress(0)
+    try {
+      const response = await fetch("/AbhishekResume.pdf")
+      if (!response.ok) throw new Error("Failed to fetch resume")
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = "AbhishekResume.pdf"
+      document.body.appendChild(a)
+      // Simulate progress
+      let prog = 0
+      const interval = setInterval(() => {
+        prog += 10
+        setProgress(Math.min(prog, 100))
+        if (prog >= 100) clearInterval(interval)
+      }, 60)
+      a.click()
+      setTimeout(() => {
+        setDownloadStatus("downloaded")
+        setTimeout(() => setDownloadStatus("complete"), 1200)
+        setTimeout(() => {
+          setDownloadStatus("idle")
+          setProgress(0)
+        }, 1500)
+      }, 700)
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+    } catch (e) {
+      setDownloadStatus("idle")
+      setProgress(0)
+      alert("Failed to download resume.")
+    }
+  }
+
+  return (
+    <div className="mt-3">
+      <DownloadButton
+        downloadStatus={downloadStatus}
+        progress={progress}
+        onClick={downloadStatus === "idle" ? handleDownload : () => {}}
+        className="hover:shadow-xl transition-shadow duration-300"
+      />
+    </div>
+  )
+}
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -51,6 +108,7 @@ export default function Page() {
                   </svg>
                   abhishek.ck3110@gmail.com
                 </Link>
+                <DownloadResumeButton />
               </BlurFade>
             </div>
             <BlurFade delay={BLUR_FADE_DELAY}>
