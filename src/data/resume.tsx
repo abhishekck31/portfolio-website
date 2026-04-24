@@ -75,6 +75,18 @@ export const DATA = {
 
   work: [
     {
+      company: "Taranova Solutions Private Limited",
+      badges: [],
+      href: "#",
+      location: "Hybrid",
+      title: "Software Engineering Intern",
+      logoUrl: "/taranova.png",
+      start: "April 2026",
+      end: "Present",
+      description:
+        "Currently building backend services for ApnaCA, a GST compliance SaaS platform — including API development, job scheduling, and core business logic for GSTIN and filing workflows.\nDesigning and implementing background jobs and async task pipelines to handle GST data processing, automation triggers, and compliance operations at scale.",
+    },
+    {
       company: "Refurbo",
       badges: [],
       href: "https://refurbo.in/",
@@ -82,7 +94,7 @@ export const DATA = {
       title: "Software Engineering Intern",
       logoUrl: "/refurbo.png",
       start: "January 2026",
-      end: "Present",
+      end: "March 2026",
       description:
         "• Working on real-world frontend features and bug fixes in a product-based environment.\n• Debugged complex UI rendering issues, including incorrect image mapping after sorting and filtering operations. \n• Collaborated using Git & GitHub, handling pull requests, code updates, and clean commit practices.\n• Focused on performance, clean UI, and maintainable code rather than quick fixes",
     },
