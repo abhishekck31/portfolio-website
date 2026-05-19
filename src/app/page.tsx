@@ -59,7 +59,7 @@ function DownloadResumeButton() {
       <DownloadButton
         downloadStatus={downloadStatus}
         progress={progress}
-        onClick={downloadStatus === "idle" ? handleDownload : () => {}}
+        onClick={downloadStatus === "idle" ? handleDownload : () => { }}
         className="hover:shadow-xl transition-shadow duration-300"
       />
     </div>
@@ -282,7 +282,7 @@ export default function Page() {
                   Sharing Knowledge
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  I share tech blogs, resources, and insights that will be useful for students preparing for tech jobs and mastering software engineering.
+                  I share tech blogs, resources, and insights.
                 </p>
               </div>
             </div>
