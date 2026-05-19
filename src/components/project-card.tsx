@@ -26,6 +26,7 @@ interface Props {
     href: string;
   }[];
   className?: string;
+  isBlog?: boolean;
 }
 
 export function ProjectCard({
@@ -39,6 +40,7 @@ export function ProjectCard({
   video,
   links,
   className,
+  isBlog,
 }: Props) {
   return (
     <Card
@@ -83,19 +85,29 @@ export function ProjectCard({
         </div>
       </CardHeader>
       <CardContent className="mt-auto flex flex-col px-2">
-        {tags && tags.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-1">
-            {tags?.map((tag) => (
-              <Badge
-                className="px-1 py-0 text-[10px]"
-                variant="secondary"
-                key={tag}
-              >
-                {tag}
-              </Badge>
-            ))}
+        <div className="mt-2 flex items-end justify-between gap-2">
+          <div className="flex flex-wrap gap-1">
+            {tags && tags.length > 0 && (
+              tags?.map((tag) => (
+                <Badge
+                  className="px-1 py-0 text-[10px]"
+                  variant="secondary"
+                  key={tag}
+                >
+                  {tag}
+                </Badge>
+              ))
+            )}
           </div>
-        )}
+          {isBlog && href && (
+            <Link href={href} className="shrink-0">
+              <Badge className="px-3 py-1 text-[11px] font-medium bg-foreground text-background hover:opacity-85 cursor-pointer transition-all duration-200 flex items-center gap-1">
+                Read
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </Badge>
+            </Link>
+          )}
+        </div>
       </CardContent>
       <CardFooter className="px-2 pb-2">
         {links && links.length > 0 && (

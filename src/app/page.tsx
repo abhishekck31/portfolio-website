@@ -271,6 +271,45 @@ export default function Page() {
         </div>
       </section>
 
+      <section id="blogs">
+        <div className="space-y-12 w-full py-12">
+          <BlurFade delay={BLUR_FADE_DELAY * 18}>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
+                  Blogs & Resources
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Sharing Knowledge
+                </h2>
+                <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  I share tech blogs, resources, and insights that will be useful for students preparing for tech jobs and mastering software engineering.
+                </p>
+              </div>
+            </div>
+          </BlurFade>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 max-w-[800px] mx-auto">
+            {DATA.blogs.map((blog, id) => (
+              <BlurFade
+                key={blog.title}
+                delay={BLUR_FADE_DELAY * 19 + id * 0.05}
+              >
+                <ProjectCard
+                  href={blog.href}
+                  key={blog.title}
+                  title={blog.title}
+                  description={blog.description}
+                  dates={blog.dates}
+                  tags={blog.tags}
+                  image={blog.image}
+                  isBlog={true}
+                />
+              </BlurFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }

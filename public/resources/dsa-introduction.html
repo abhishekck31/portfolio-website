@@ -1,0 +1,670 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root{
+  --color-background-primary:#1a1a1a;
+  --color-background-secondary:#222222;
+  --color-background-tertiary:#111111;
+  --color-text-primary:#e8e4df;
+  --color-text-secondary:#8a8580;
+  --color-border-secondary:#333;
+  --color-border-tertiary:#2a2a2a;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--color-background-tertiary);color:var(--color-text-primary);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7}
+.wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+.page-header{padding:2.5rem 0 2.5rem;border-bottom:0.5px solid var(--color-border-secondary);margin-bottom:2rem}
+.eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-text-secondary);font-weight:500;margin-bottom:1rem;font-family:'DM Mono',monospace}
+.page-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1;color:var(--color-text-primary);font-weight:400;margin-bottom:.85rem}
+.page-title em{font-style:italic;color:#7faa94}
+.page-subtitle{font-size:14px;color:var(--color-text-secondary);max-width:460px;line-height:1.65;font-weight:300}
+.progress-row{display:flex;align-items:center;gap:12px;margin-top:1.5rem}
+.progress-track{flex:1;height:2px;background:var(--color-border-secondary);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--color-text-primary);border-radius:2px;transition:width 0.4s ease;width:0%}
+.progress-label{font-size:11px;color:var(--color-text-secondary);white-space:nowrap;font-family:'DM Mono',monospace}
+
+.topic-nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0;background:var(--color-border-tertiary);border:1px solid var(--color-border-secondary);border-radius:12px;overflow:hidden;margin-bottom:2rem}
+.t-btn{background:var(--color-background-primary);border:none;padding:16px 18px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.15s;line-height:1.3;border-right:1px solid var(--color-border-tertiary);border-bottom:1px solid var(--color-border-tertiary)}
+.t-btn:hover{background:var(--color-background-secondary)}
+.t-btn.active{background:#e8e4df}
+.t-num{display:block;font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);margin-bottom:5px;letter-spacing:0.06em}
+.t-btn.active .t-num{color:rgba(0,0,0,0.45)}
+.t-btn.done .t-num{color:#7faa94}
+.t-name{display:block;font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.t-btn.active .t-name{color:#111}
+.t-btn:not(.active):hover .t-name{color:var(--color-text-primary)}
+
+.content-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:16px;overflow:hidden}
+.card-header{padding:1.75rem 2rem 1.5rem;border-bottom:1px solid var(--color-border-tertiary);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;background:var(--color-background-secondary)}
+.card-topic-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);display:block;margin-bottom:5px;letter-spacing:0.06em}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--color-text-primary);font-weight:400;line-height:1.2}
+.card-subtitle{font-size:12px;color:var(--color-text-secondary);margin-top:3px}
+.mark-btn{flex-shrink:0;padding:7px 16px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;white-space:nowrap;font-weight:500}
+.mark-btn:hover{border-color:var(--color-text-primary);color:var(--color-text-primary)}
+.mark-btn.done{background:#e8e4df;border-color:#e8e4df;color:#111}
+.card-body{padding:1.75rem 2rem}
+.sec{margin-bottom:2rem}
+.sec-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-secondary);font-weight:500;margin-bottom:.85rem;display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace}
+.sec-label::after{content:'';flex:1;height:0.5px;background:var(--color-border-tertiary)}
+.prose{font-size:14px;color:var(--color-text-secondary);line-height:1.75}
+.prose p{margin-bottom:.75rem}
+.prose strong{color:var(--color-text-primary);font-weight:500}
+.prose code{font-family:'DM Mono',monospace;font-size:12px;background:var(--color-background-secondary);padding:2px 6px;border-radius:4px;color:#d4a76a;border:1px solid var(--color-border-tertiary)}
+.concept-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:.75rem 0}
+.cc{background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:10px;padding:12px 14px}
+.cc h4{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.cc p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.code-block{border:1px solid var(--color-border-secondary);border-radius:10px;overflow:hidden;margin:.85rem 0}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#252525;border-bottom:1px solid var(--color-border-tertiary)}
+.code-dots{display:flex;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}
+.d1{background:#e06c6c}.d2{background:#e0b46c}.d3{background:#6cb86c}
+.code-lang{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);letter-spacing:0.05em}
+pre{padding:1.1rem 1.25rem;overflow-x:auto;font-family:'DM Mono',monospace;font-size:12px;line-height:1.75;color:#d4d0cb;background:#1e1e1e}
+.kw{color:#c792ea}.str{color:#c3e88d}.num{color:#f78c6c}.fn{color:#82aaff}.cm{color:#546e7a;font-style:italic}.cls{color:#ffcb6b}.op{color:#89ddff}
+.dtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:.85rem 0}
+.dtable th{text-align:left;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-secondary);font-weight:500;border-bottom:1px solid var(--color-border-secondary);font-family:'DM Mono',monospace}
+.dtable td{padding:9px 12px;border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-primary);font-family:'DM Mono',monospace;font-size:12px;vertical-align:middle}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tr:hover td{background:var(--color-background-secondary)}
+.badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500}
+.b-green{background:#1a3a2a;color:#7fda9f}.b-amber{background:#3a2e1a;color:#e0b46c}.b-red{background:#3a1a1a;color:#e06c6c}.b-blue{background:#1a2a3a;color:#82aaff}.b-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.note{background:var(--color-background-secondary);border-left:2px solid var(--color-border-secondary);border-radius:0;padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:var(--color-text-secondary);line-height:1.65}
+.note strong{color:var(--color-text-primary)}
+.tip{background:#1a2e22;border-left:2px solid #7faa94;border-radius:0;padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:#a3c9b5;line-height:1.65}
+.tip code{background:#1a3a2a;color:#7fda9f;border-color:#2a4a3a}
+.warn{background:#2e2618;border-left:2px solid #d4a76a;border-radius:0;padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:#d4a76a;line-height:1.65}
+.warn code{background:#3a2e1a;color:#e0b46c;border-color:#4a3e2a}
+.links-list{display:flex;flex-direction:column;gap:5px;margin:.85rem 0}
+.plink{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:8px;text-decoration:none;color:var(--color-text-primary);font-size:13px;transition:background 0.15s,border-color 0.15s}
+.plink:hover{background:#2a2a2a;border-color:var(--color-border-secondary)}
+.plink-n{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);min-width:18px}
+.plink-t{flex:1;font-weight:400;color:var(--color-text-primary)}
+.plink-arr{font-size:12px;color:var(--color-text-secondary)}
+.card-footer{padding:1.25rem 2rem;border-top:1px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+.nav-btn{padding:8px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s}
+.nav-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-next{background:#e8e4df;border-color:#e8e4df;color:#111}
+.nav-next:hover{opacity:0.85;background:#d8d4cf;color:#111}
+
+.upvote-card{margin-top:2rem;background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:16px;padding:2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+.upvote-text{font-size:14px;color:var(--color-text-secondary);font-weight:400}
+.upvote-btn{display:flex;align-items:center;gap:8px;padding:10px 24px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--color-text-primary);cursor:pointer;transition:all 0.2s;user-select:none}
+.upvote-btn:hover{border-color:#7faa94;color:#7faa94;background:#1a2e22}
+.upvote-btn:active{transform:scale(0.96)}
+.upvote-btn.voted{background:#1a2e22;border-color:#7faa94;color:#7fda9f}
+.upvote-btn.voted svg{fill:#7fda9f;stroke:#7fda9f}
+.upvote-btn svg{transition:all 0.2s}
+.upvote-btn.pop svg{animation:popUp 0.35s ease}
+@keyframes popUp{0%{transform:translateY(0)}40%{transform:translateY(-5px)}100%{transform:translateY(0)}}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Things to know before starting with DSA in Java — interactive study reference covering 10 topics.</h2>
+
+<div class="wrap">
+
+<div class="page-header">
+  <p class="eyebrow">Java · Data Structures · Algorithms</p>
+  <h1 class="page-title">Things to know before<br>starting with <em>DSA in Java</em></h1>
+  <p class="page-subtitle">A complete reference covering fundamentals, complexity, collections, strings, hashing, and recursion.</p>
+  <div class="progress-row">
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+    <span class="progress-label" id="pLabel">0 / 10</span>
+  </div>
+</div>
+
+<div class="topic-nav" id="topicNav"></div>
+
+<div class="content-card" id="contentCard">
+  <div style="padding:3.5rem 2rem;text-align:center;color:var(--color-text-secondary);font-size:14px">
+    Select a topic above to begin.
+  </div>
+</div>
+
+<div class="upvote-card" id="upvoteCard">
+  <p class="upvote-text">Was this helpful? If yes, upvote this</p>
+  <button class="upvote-btn" id="upvoteBtn" onclick="handleUpvote()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+    <span id="upvoteCount">43</span>
+  </button>
+</div>
+
+</div>
+
+<script>
+const T=[
+{id:'java-basics',num:'01',name:'Java basics',sub:'Syntax, types, I/O, loops',content:`
+<div class="sec"><div class="sec-label">The language</div>
+<div class="prose"><p>Java is a <strong>class-based, object-oriented</strong> language built on "Write Once, Run Anywhere." It compiles to <strong>bytecode</strong> which the JVM runs on any platform — no recompilation needed.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>Strongly typed</h4><p>Every variable has a declared type at compile time.</p></div>
+<div class="cc"><h4>Garbage collected</h4><p>The JVM frees unused memory automatically.</p></div>
+<div class="cc"><h4>OOP-first</h4><p>Everything lives inside a class, including the entry point.</p></div>
+<div class="cc"><h4>Platform-free</h4><p>One .class file runs on any machine with a JVM.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Hello World — anatomy</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Main.java</span></div>
+<pre><span class="kw">public class</span> <span class="cls">Main</span> {
+    <span class="cm">// JVM looks for this exact signature</span>
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello World"</span>);
+    }
+}</pre></div>
+<div class="concept-row">
+<div class="cc"><h4>public</h4><p>Accessible from anywhere — JVM needs this.</p></div>
+<div class="cc"><h4>static</h4><p>Runs without creating a class instance.</p></div>
+<div class="cc"><h4>void</h4><p>Returns nothing.</p></div>
+<div class="cc"><h4>String[] args</h4><p>Command-line arguments at runtime.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">8 primitive data types</div>
+<table class="dtable"><thead><tr><th>Type</th><th>Size</th><th>Use</th><th>Example</th></tr></thead><tbody>
+<tr><td>byte</td><td>1 byte</td><td>-128 to 127</td><td>byte b = 100;</td></tr>
+<tr><td>short</td><td>2 bytes</td><td>small integers</td><td>short s = 5000;</td></tr>
+<tr><td>int</td><td>4 bytes</td><td><span class="badge b-gray">most common</span></td><td>int x = 42;</td></tr>
+<tr><td>long</td><td>8 bytes</td><td>large integers</td><td>long l = 99L;</td></tr>
+<tr><td>float</td><td>4 bytes</td><td>decimals (needs f)</td><td>float f = 3.14f;</td></tr>
+<tr><td>double</td><td>8 bytes</td><td><span class="badge b-gray">most common</span></td><td>double d = 3.14;</td></tr>
+<tr><td>char</td><td>2 bytes</td><td>single character</td><td>char c = 'A';</td></tr>
+<tr><td>boolean</td><td>1 bit</td><td>true / false</td><td>boolean ok = true;</td></tr>
+</tbody></table></div>
+<div class="sec"><div class="sec-label">Operators</div>
+<div class="concept-row">
+<div class="cc"><h4>Arithmetic</h4><p><code>+ - * / %</code> — modulo gives remainder: 7%3 = 1</p></div>
+<div class="cc"><h4>Relational</h4><p><code>== != > < >= <=</code> — always return boolean</p></div>
+<div class="cc"><h4>Logical</h4><p><code>&amp;&amp; || !</code> — short-circuit evaluation</p></div>
+<div class="cc"><h4>Assignment</h4><p><code>= += -= *= /= %=</code> — compound shorthand</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Input & output</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Scanner</span></div>
+<pre><span class="kw">import</span> java.util.<span class="cls">Scanner</span>;
+<span class="cls">Scanner</span> sc = <span class="kw">new</span> <span class="cls">Scanner</span>(<span class="cls">System</span>.in);
+<span class="kw">int</span>    age  = sc.<span class="fn">nextInt</span>();
+<span class="cls">String</span> name = sc.<span class="fn">next</span>();
+sc.<span class="fn">close</span>();
+System.out.println(name + " is " + age);</pre></div>
+<div class="tip">After <code>nextInt()</code>, call <code>nextLine()</code> once to consume the leftover newline.</div></div>
+<div class="sec"><div class="sec-label">Control flow</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">if / switch / loops</span></div>
+<pre><span class="kw">if</span> (marks > <span class="num">90</span>)      { ... }
+<span class="kw">else if</span> (marks > <span class="num">80</span>) { ... }
+<span class="kw">else</span>                 { ... }
+
+<span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="num">1</span>: <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Mon"</span>); <span class="kw">break</span>;
+    <span class="kw">default</span>: <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Invalid"</span>);
+}
+
+<span class="kw">for</span> (<span class="kw">int</span> i=<span class="num">0</span>; i&lt;<span class="num">5</span>; i++) { ... }
+<span class="kw">while</span> (i &lt; <span class="num">5</span>) { i++; }
+<span class="kw">do</span> { i++; } <span class="kw">while</span> (i &lt; <span class="num">5</span>);</pre></div></div>
+<div class="sec"><div class="sec-label">Exception handling</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">try-catch-finally</span></div>
+<pre><span class="kw">try</span> {
+    <span class="kw">int</span>[] arr = {<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>};
+    arr[<span class="num">10</span>]; <span class="cm">// throws ArrayIndexOutOfBoundsException</span>
+} <span class="kw">catch</span> (<span class="cls">Exception</span> e) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Error: "</span> + e.<span class="fn">getMessage</span>());
+} <span class="kw">finally</span> {
+    <span class="cm">// always runs — cleanup here</span>
+}</pre></div></div>`},
+{id:'complexity',num:'02',name:'Time & space complexity',sub:'Big O, growth rates, analysis',content:`
+<div class="sec"><div class="sec-label">Why it matters</div>
+<div class="prose"><p>Actual runtime depends on hardware. <strong>Complexity notation</strong> describes how resource usage scales with input size N — independent of machine speed.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>Time complexity</h4><p>How many operations as N grows?</p></div>
+<div class="cc"><h4>Space complexity</h4><p>How much extra memory as N grows?</p></div>
+<div class="cc"><h4>Big O</h4><p>Upper bound — worst-case guarantee.</p></div>
+<div class="cc"><h4>Theta / Omega</h4><p>Tight bound / lower bound (best case).</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Growth rates — best to worst</div>
+<table class="dtable"><thead><tr><th>Notation</th><th>Name</th><th>Example</th><th>Rating</th></tr></thead><tbody>
+<tr><td>O(1)</td><td>Constant</td><td>Array index access</td><td><span class="badge b-green">Excellent</span></td></tr>
+<tr><td>O(log N)</td><td>Logarithmic</td><td>Binary search</td><td><span class="badge b-green">Great</span></td></tr>
+<tr><td>O(N)</td><td>Linear</td><td>Single loop</td><td><span class="badge b-blue">Good</span></td></tr>
+<tr><td>O(N log N)</td><td>Linearithmic</td><td>Merge sort</td><td><span class="badge b-gray">Acceptable</span></td></tr>
+<tr><td>O(N²)</td><td>Quadratic</td><td>Nested loops</td><td><span class="badge b-amber">Slow</span></td></tr>
+<tr><td>O(2ᴺ)</td><td>Exponential</td><td>Brute-force subsets</td><td><span class="badge b-red">Avoid</span></td></tr>
+</tbody></table></div>
+<div class="sec"><div class="sec-label">Four rules</div>
+<div class="concept-row">
+<div class="cc"><h4>Drop constants</h4><p>O(5N) → O(N)</p></div>
+<div class="cc"><h4>Worst case</h4><p>Always analyze the worst scenario.</p></div>
+<div class="cc"><h4>Drop lower terms</h4><p>O(N²+N) → O(N²)</p></div>
+<div class="cc"><h4>Sequential vs nested</h4><p>Sequential → add. Nested → multiply.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Code examples</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Annotated</span></div>
+<pre><span class="kw">int</span> sum = a + b;              <span class="cm">// O(1)     — constant</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">0</span>; i&lt;N; i++) { }  <span class="cm">// O(N)     — linear</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">0</span>; i&lt;N; i++)
+  <span class="kw">for</span>(<span class="kw">int</span> j=<span class="num">0</span>; j&lt;N; j++) {} <span class="cm">// O(N²)    — quadratic</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">1</span>; i&lt;N; i*=<span class="num">2</span>) {}  <span class="cm">// O(log N) — halves each step</span></pre></div></div>
+<div class="sec"><div class="sec-label">Space complexity</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Examples</span></div>
+<pre><span class="kw">int</span> x = <span class="num">5</span>;               <span class="cm">// O(1) — fixed memory</span>
+<span class="kw">int</span>[] arr = <span class="kw">new int</span>[N];  <span class="cm">// O(N) — scales with input</span>
+<span class="cm">// Recursion depth N → O(N) stack frames</span></pre></div>
+<div class="tip"><strong>Rule of thumb:</strong> Recursion depth = space complexity.</div></div>`},
+{id:'arrays',num:'03',name:'Basic arrays',sub:'Declaration, traversal, 2D arrays',content:`
+<div class="sec"><div class="sec-label">What is an array</div>
+<div class="prose"><p>A <strong>fixed-size, contiguous block of memory</strong> storing elements of the same type. Random access is O(1) because any element's address is computed directly from its index.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>Contiguous memory</h4><p>Elements sit adjacent in RAM — enables O(1) access.</p></div>
+<div class="cc"><h4>Fixed size</h4><p>Set at creation. Use ArrayList for dynamic sizing.</p></div>
+<div class="cc"><h4>0-based index</h4><p>First = arr[0], last = arr[n-1]. arr[n] throws an exception.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Declaration & traversal</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Array fundamentals</span></div>
+<pre><span class="kw">int</span>[] arr = {<span class="num">90</span>, <span class="num">80</span>, <span class="num">70</span>};     <span class="cm">// inline init</span>
+<span class="kw">int</span>[] arr2 = <span class="kw">new int</span>[<span class="num">5</span>];      <span class="cm">// default-zero array</span>
+arr.length;   <span class="cm">// 3 — a field, not a method</span>
+arr[<span class="num">0</span>];       <span class="cm">// 90</span>
+
+<span class="kw">for</span> (<span class="kw">int</span> i=<span class="num">0</span>; i&lt;arr.length; i++) { ... }  <span class="cm">// index matters</span>
+<span class="kw">for</span> (<span class="kw">int</span> n : arr) { ... }                  <span class="cm">// for-each</span></pre></div></div>
+<div class="sec"><div class="sec-label">Common patterns</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Sum, max, reverse, sorted check</span></div>
+<pre><span class="kw">int</span>[] a = {<span class="num">3</span>,<span class="num">7</span>,<span class="num">1</span>,<span class="num">9</span>,<span class="num">4</span>};
+
+<span class="kw">int</span> sum=<span class="num">0</span>; <span class="kw">for</span>(<span class="kw">int</span> x:a) sum+=x;
+
+<span class="kw">int</span> max=a[<span class="num">0</span>]; <span class="kw">for</span>(<span class="kw">int</span> x:a) <span class="kw">if</span>(x>max) max=x;
+
+<span class="cm">// Reverse — two-pointer</span>
+<span class="kw">int</span> l=<span class="num">0</span>, r=a.length-<span class="num">1</span>;
+<span class="kw">while</span>(l&lt;r){ <span class="kw">int</span> t=a[l]; a[l++]=a[r]; a[r--]=t; }
+
+<span class="cm">// Check sorted</span>
+<span class="kw">boolean</span> sorted=<span class="kw">true</span>;
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">0</span>;i&lt;a.length-<span class="num">1</span>;i++)
+    <span class="kw">if</span>(a[i]>a[i+<span class="num">1</span>]) sorted=<span class="kw">false</span>;</pre></div></div>
+<div class="sec"><div class="sec-label">2D arrays</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Matrix traversal</span></div>
+<pre><span class="kw">int</span>[][] m = {{<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>},{<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>}};
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">0</span>; i&lt;m.length; i++)
+    <span class="kw">for</span>(<span class="kw">int</span> j=<span class="num">0</span>; j&lt;m[i].length; j++)
+        <span class="cls">System</span>.out.<span class="fn">print</span>(m[i][j]+<span class="str">" "</span>);</pre></div></div>
+<div class="sec"><div class="sec-label">Practice problems</div>
+<div class="links-list">
+${["Sum of array elements","Count of odd numbers in array","Reverse an array","Check if the array is sorted"].map((l,i)=>`<a class="plink" href="https://takeuforward.org/plus/dsa" target="_blank"><span class="plink-n">${String(i+1).padStart(2,'0')}</span><span class="plink-t">${l}</span><span class="plink-arr">↗</span></a>`).join('')}
+</div></div>`},
+{id:'hashing',num:'04',name:'Basic hashing',sub:'Frequency arrays, HashMaps, collisions',content:`
+<div class="sec"><div class="sec-label">The idea</div>
+<div class="prose"><p>Hashing transforms a key into an <strong>index</strong> where data is stored — targeting <strong>O(1) average</strong> store and retrieve, regardless of dataset size.</p></div>
+<div class="note"><strong>Analogy:</strong> A delivery app stores your address on first order, then retrieves it instantly next time — no scanning. That's hashing.</div></div>
+<div class="sec"><div class="sec-label">Brute force vs hash array</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Comparison</span></div>
+<pre><span class="kw">int</span>[] arr = {<span class="num">5</span>,<span class="num">6</span>,<span class="num">5</span>,<span class="num">6</span>,<span class="num">9</span>,<span class="num">6</span>};
+
+<span class="cm">// Brute force — O(N) per query</span>
+<span class="kw">int</span> count=<span class="num">0</span>;
+<span class="kw">for</span>(<span class="kw">int</span> x:arr) <span class="kw">if</span>(x==<span class="num">6</span>) count++;
+
+<span class="cm">// Hash array — O(N) once, O(1) per query</span>
+<span class="kw">int</span>[] freq = <span class="kw">new int</span>[<span class="num">10</span>];
+<span class="kw">for</span>(<span class="kw">int</span> x:arr) freq[x]++;
+freq[<span class="num">6</span>]; <span class="cm">// 3 — instant</span>
+freq[<span class="num">5</span>]; <span class="cm">// 2 — instant</span>
+<span class="cm">// Q queries: O(N×Q) vs O(N+Q)</span></pre></div></div>
+<div class="sec"><div class="sec-label">Character hashing — ASCII</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Char frequency</span></div>
+<pre><span class="kw">int</span>[] freq = <span class="kw">new int</span>[<span class="num">256</span>];
+<span class="kw">for</span>(<span class="kw">char</span> c : <span class="str">"hello"</span>.<span class="fn">toCharArray</span>()) freq[c]++;
+freq[<span class="str">'l'</span>]; <span class="cm">// 2
+
+// Lowercase only — 26 slots</span>
+<span class="kw">int</span>[] low = <span class="kw">new int</span>[<span class="num">26</span>];
+<span class="kw">for</span>(<span class="kw">char</span> c : s.<span class="fn">toCharArray</span>()) low[c-<span class="str">'a'</span>]++;
+<span class="cm">// 'a'→0, 'b'→1, ..., 'z'→25</span></pre></div></div>
+<div class="sec"><div class="sec-label">HashMap</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">General purpose, any key type</span></div>
+<pre><span class="cls">HashMap</span>&lt;<span class="cls">String</span>,<span class="cls">Integer</span>&gt; map = <span class="kw">new</span> <span class="cls">HashMap</span>&lt;&gt;();
+<span class="kw">for</span>(<span class="cls">String</span> w : words)
+    map.<span class="fn">put</span>(w, map.<span class="fn">getOrDefault</span>(w,<span class="num">0</span>)+<span class="num">1</span>);
+map.<span class="fn">get</span>(<span class="str">"apple"</span>);            <span class="cm">// O(1) avg</span>
+map.<span class="fn">getOrDefault</span>(<span class="str">"mango"</span>,<span class="num">0</span>); <span class="cm">// safe default</span></pre></div>
+<div class="concept-row">
+<div class="cc"><h4>HashMap avg</h4><p>O(1) put/get/remove.</p></div>
+<div class="cc"><h4>HashMap worst</h4><p>O(N) if all keys collide — very rare.</p></div>
+<div class="cc"><h4>TreeMap</h4><p>O(log N), keys sorted. Use when order matters.</p></div>
+</div></div>`},
+{id:'strings',num:'05',name:'Basic strings',sub:'Immutability, methods, StringBuilder',content:`
+<div class="sec"><div class="sec-label">Strings in Java</div>
+<div class="prose"><p><code>String</code> is an <strong>object</strong>, not a primitive. Strings are <strong>immutable</strong> — any modification creates a new object in the String Pool. The original is unchanged.</p></div>
+<div class="warn"><code>s = s + "x"</code> inside a loop creates a new String every iteration — O(N²) total. Use <code>StringBuilder</code> instead.</div></div>
+<div class="sec"><div class="sec-label">Creation & comparison</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Key distinctions</span></div>
+<pre><span class="cls">String</span> s1 = <span class="str">"Hello"</span>;
+<span class="cls">String</span> s2 = <span class="kw">new</span> <span class="cls">String</span>(<span class="str">"Hello"</span>);
+s1 == s2;        <span class="cm">// false — different references</span>
+s1.<span class="fn">equals</span>(s2);  <span class="cm">// true  — same content</span>
+<span class="cm">// Always use .equals() to compare Strings</span></pre></div></div>
+<div class="sec"><div class="sec-label">Essential methods</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">String s = "Hello World"</span></div>
+<pre>s.<span class="fn">length</span>();           <span class="cm">// 11</span>
+s.<span class="fn">charAt</span>(<span class="num">0</span>);          <span class="cm">// 'H'</span>
+s.<span class="fn">indexOf</span>(<span class="str">'o'</span>);       <span class="cm">// 4</span>
+s.<span class="fn">substring</span>(<span class="num">0</span>,<span class="num">5</span>);    <span class="cm">// "Hello" — end exclusive</span>
+s.<span class="fn">toLowerCase</span>();     <span class="cm">// "hello world"</span>
+s.<span class="fn">trim</span>();            <span class="cm">// removes whitespace</span>
+s.<span class="fn">replace</span>(<span class="str">'l'</span>,<span class="str">'r'</span>);  <span class="cm">// "Herro Worrd"</span>
+s.<span class="fn">contains</span>(<span class="str">"World"</span>); <span class="cm">// true</span>
+s.<span class="fn">split</span>(<span class="str">" "</span>);        <span class="cm">// ["Hello","World"]</span>
+s.<span class="fn">toCharArray</span>();     <span class="cm">// iterate char by char</span></pre></div></div>
+<div class="sec"><div class="sec-label">Traversal & palindrome</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Two-pointer pattern</span></div>
+<pre><span class="cls">String</span> s = <span class="str">"racecar"</span>;
+<span class="kw">int</span> l=<span class="num">0</span>, r=s.<span class="fn">length</span>()-<span class="num">1</span>;
+<span class="kw">boolean</span> isPalin=<span class="kw">true</span>;
+<span class="kw">while</span>(l&lt;r) {
+    <span class="kw">if</span>(s.<span class="fn">charAt</span>(l)!=s.<span class="fn">charAt</span>(r)){ isPalin=<span class="kw">false</span>; <span class="kw">break</span>; }
+    l++; r--;
+}</pre></div></div>
+<div class="sec"><div class="sec-label">StringBuilder</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Mutable, O(N) concatenation</span></div>
+<pre><span class="cls">String</span> rev = <span class="kw">new</span> <span class="cls">StringBuilder</span>(<span class="str">"hello"</span>).<span class="fn">reverse</span>().<span class="fn">toString</span>();
+
+<span class="cls">StringBuilder</span> sb = <span class="kw">new</span> <span class="cls">StringBuilder</span>();
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">0</span>;i&lt;<span class="num">1000</span>;i++) sb.<span class="fn">append</span>(i);
+<span class="cls">String</span> result = sb.<span class="fn">toString</span>();</pre></div>
+<div class="tip"><strong>String vs char:</strong> Strings use double quotes <code>"A"</code>, characters use single quotes <code>'A'</code>. <code>'A'</code> has ASCII value 65 and can participate in arithmetic.</div></div>`},
+{id:'recursion',num:'06',name:'Basic recursion',sub:'Base case, call stack, types',content:`
+<div class="sec"><div class="sec-label">What is recursion</div>
+<div class="prose"><p>A function <strong>calls itself</strong> to solve a smaller instance of the same problem. Every recursive solution requires a <strong>base case</strong> that stops the chain, and a recursive case that moves toward it.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>Base case</h4><p>The stopping condition. Without it → StackOverflowError.</p></div>
+<div class="cc"><h4>Recursive case</h4><p>Calls itself with a smaller input.</p></div>
+<div class="cc"><h4>Call stack</h4><p>Each call adds a frame. Unwinds when base case hits.</p></div>
+<div class="cc"><h4>Stack overflow</h4><p>Depth > ~10,000 on most JVMs crashes the program.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Head vs tail recursion</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Two styles</span></div>
+<pre><span class="cm">// Head — recurse FIRST, process after → prints 1 2 3 4 5</span>
+<span class="kw">static void</span> <span class="fn">head</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span>(n==<span class="num">0</span>) <span class="kw">return</span>;
+    <span class="fn">head</span>(n-<span class="num">1</span>);
+    <span class="cls">System</span>.out.<span class="fn">print</span>(n+<span class="str">" "</span>);
+}
+<span class="cm">// Tail — process FIRST, recurse after → prints 5 4 3 2 1</span>
+<span class="kw">static void</span> <span class="fn">tail</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span>(n==<span class="num">0</span>) <span class="kw">return</span>;
+    <span class="cls">System</span>.out.<span class="fn">print</span>(n+<span class="str">" "</span>);
+    <span class="fn">tail</span>(n-<span class="num">1</span>);
+}</pre></div></div>
+<div class="sec"><div class="sec-label">Classic problems</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Factorial, sum, Fibonacci, reverse, sorted</span></div>
+<pre><span class="kw">static int</span> <span class="fn">fact</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span>(n&lt;=<span class="num">1</span>) <span class="kw">return <span class="num">1</span>;
+    <span class="kw">return</span> n * <span class="fn">fact</span>(n-<span class="num">1</span>);
+}
+<span class="kw">static int</span> <span class="fn">sum</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span>(n==<span class="num">0</span>) <span class="kw">return</span> <span class="num">0</span>;
+    <span class="kw">return</span> n + <span class="fn">sum</span>(n-<span class="num">1</span>);
+}
+<span class="kw">static int</span> <span class="fn">fib</span>(<span class="kw">int</span> n) { <span class="cm">// O(2ᴺ) — use memo for O(N)</span>
+    <span class="kw">if</span>(n&lt;=<span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);
+}
+<span class="kw">static</span> <span class="cls">String</span> <span class="fn">reverse</span>(<span class="cls">String</span> s) {
+    <span class="kw">if</span>(s.<span class="fn">length</span>()&lt;=<span class="num">1</span>) <span class="kw">return</span> s;
+    <span class="kw">return</span> <span class="fn">reverse</span>(s.<span class="fn">substring</span>(<span class="num">1</span>)) + s.<span class="fn">charAt</span>(<span class="num">0</span>);
+}
+<span class="kw">static boolean</span> <span class="fn">isSorted</span>(<span class="kw">int</span>[] a, <span class="kw">int</span> i) {
+    <span class="kw">if</span>(i==a.length-<span class="num">1</span>) <span class="kw">return true</span>;
+    <span class="kw">if</span>(a[i]>a[i+<span class="num">1</span>]) <span class="kw">return false</span>;
+    <span class="kw">return</span> <span class="fn">isSorted</span>(a, i+<span class="num">1</span>);
+}</pre></div></div>
+<div class="sec"><div class="sec-label">Complexity</div>
+<div class="concept-row">
+<div class="cc"><h4>Single branch</h4><p>One call per step → O(N) time, O(N) space.</p></div>
+<div class="cc"><h4>Two branches</h4><p>Fibonacci → O(2ᴺ). Needs memoisation.</p></div>
+<div class="cc"><h4>Stack depth</h4><p>Recursion depth = space used.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Practice problems</div>
+<div class="links-list">
+${["Recursion concepts with parameters","Sum of first N numbers","Factorial of a given number","Reverse a string","Check if string is palindrome","Fibonacci number","Check if array is sorted","Sum of digits in a number"].map((l,i)=>`<a class="plink" href="https://takeuforward.org/plus/dsa" target="_blank"><span class="plink-n">${String(i+1).padStart(2,'0')}</span><span class="plink-t">${l}</span><span class="plink-arr">↗</span></a>`).join('')}
+</div></div>`},
+{id:'collections',num:'07',name:'Collections framework',sub:'List, Set, Map, Queue',content:`
+<div class="sec"><div class="sec-label">Overview</div>
+<div class="prose"><p>JCF provides ready-made, type-safe data structures. Choose based on what you need: ordering, uniqueness, key-value association, or access pattern.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>List</h4><p>Ordered, duplicates allowed. Index access.</p></div>
+<div class="cc"><h4>Set</h4><p>No duplicates. HashSet (unordered) or TreeSet (sorted).</p></div>
+<div class="cc"><h4>Map</h4><p>Key-value pairs. No duplicate keys.</p></div>
+<div class="cc"><h4>Queue / Stack</h4><p>FIFO (Queue) or LIFO (Stack) patterns.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">List & Stack</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">ArrayList & Stack</span></div>
+<pre><span class="cls">List</span>&lt;<span class="cls">String</span>&gt; list = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;();
+list.<span class="fn">add</span>(<span class="str">"Apple"</span>);
+list.<span class="fn">add</span>(<span class="num">0</span>,<span class="str">"Mango"</span>);  <span class="cm">// insert at index</span>
+list.<span class="fn">get</span>(<span class="num">1</span>);          <span class="cm">// "Apple" — O(1)</span>
+list.<span class="fn">remove</span>(<span class="num">0</span>);      <span class="cm">// removes "Mango"</span>
+
+<span class="cls">Stack</span>&lt;<span class="cls">Integer</span>&gt; stack = <span class="kw">new</span> <span class="cls">Stack</span>&lt;&gt;();
+stack.<span class="fn">push</span>(<span class="num">1</span>); stack.<span class="fn">push</span>(<span class="num">2</span>);
+stack.<span class="fn">pop</span>();   <span class="cm">// 2 — LIFO</span>
+stack.<span class="fn">peek</span>();  <span class="cm">// 1 — view without removing</span></pre></div></div>
+<div class="sec"><div class="sec-label">Set & Map</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">HashSet & HashMap</span></div>
+<pre><span class="cls">Set</span>&lt;<span class="cls">String</span>&gt; set = <span class="kw">new</span> <span class="cls">HashSet</span>&lt;&gt;();
+set.<span class="fn">add</span>(<span class="str">"Cat"</span>); set.<span class="fn">add</span>(<span class="str">"Cat"</span>); <span class="cm">// duplicate ignored</span>
+set.<span class="fn">size</span>(); <span class="cm">// 1
+
+Map</span>&lt;<span class="cls">String</span>,<span class="cls">Integer</span>&gt; map = <span class="kw">new</span> <span class="cls">HashMap</span>&lt;&gt;();
+map.<span class="fn">put</span>(<span class="str">"Alice"</span>,<span class="num">90</span>);
+map.<span class="fn">get</span>(<span class="str">"Alice"</span>);            <span class="cm">// 90</span>
+map.<span class="fn">getOrDefault</span>(<span class="str">"Eve"</span>,<span class="num">0</span>); <span class="cm">// 0 — safe</span>
+<span class="kw">for</span>(<span class="kw">var</span> e : map.<span class="fn">entrySet</span>())
+    <span class="cls">System</span>.out.<span class="fn">println</span>(e.<span class="fn">getKey</span>()+<span class="str">"="</span>+e.<span class="fn">getValue</span>());</pre></div></div>
+<div class="sec"><div class="sec-label">Queue & utilities</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Queue & Collections class</span></div>
+<pre><span class="cls">Queue</span>&lt;<span class="cls">String</span>&gt; q = <span class="kw">new</span> <span class="cls">LinkedList</span>&lt;&gt;();
+q.<span class="fn">add</span>(<span class="str">"First"</span>); q.<span class="fn">add</span>(<span class="str">"Second"</span>);
+q.<span class="fn">poll</span>(); <span class="cm">// "First" — FIFO
+
+<span class="cls">PriorityQueue</span>&lt;<span class="cls">Integer</span>&gt; pq = <span class="kw">new</span> <span class="cls">PriorityQueue</span>&lt;&gt;();
+pq.<span class="fn">add</span>(<span class="num">30</span>); pq.<span class="fn">add</span>(<span class="num">10</span>); pq.<span class="fn">add</span>(<span class="num">20</span>);
+pq.<span class="fn">poll</span>(); <span class="cm">// 10 — always minimum
+
+Collections</span>.<span class="fn">sort</span>(list);
+<span class="cls">Collections</span>.<span class="fn">reverse</span>(list);
+<span class="cls">Collections</span>.<span class="fn">max</span>(list); <span class="cls">Collections</span>.<span class="fn">min</span>(list);</pre></div></div>`},
+{id:'basic-maths',num:'08',name:'Basic maths',sub:'Digits, primes, GCD, LCM, Armstrong',content:`
+<div class="sec"><div class="sec-label">Digit extraction</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Modulo & division — the core pattern</span></div>
+<pre><span class="kw">int</span> n = <span class="num">1234</span>;
+<span class="kw">while</span>(n><span class="num">0</span>) {
+    <span class="kw">int</span> digit = n%<span class="num">10</span>;  <span class="cm">// last digit</span>
+    n /= <span class="num">10</span>;          <span class="cm">// remove it</span>
+}
+<span class="cm">// Reverse a number</span>
+<span class="kw">int</span> rev=<span class="num">0</span>;
+<span class="kw">while</span>(n><span class="num">0</span>) { rev=rev*<span class="num">10</span>+(n%<span class="num">10</span>); n/=<span class="num">10</span>; }
+<span class="cm">// Palindrome: original == reversed</span></pre></div></div>
+<div class="sec"><div class="sec-label">GCD & LCM</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Euclidean algorithm — O(log min(a,b))</span></div>
+<pre><span class="kw">static int</span> <span class="fn">gcd</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> b==<span class="num">0</span> ? a : <span class="fn">gcd</span>(b, a%b);
+}
+<span class="kw">static int</span> <span class="fn">lcm</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> (a/<span class="fn">gcd</span>(a,b))*b; <span class="cm">// divide first to avoid overflow</span>
+}</pre></div></div>
+<div class="sec"><div class="sec-label">Prime numbers</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Check O(√N) & Sieve O(N log log N)</span></div>
+<pre><span class="kw">static boolean</span> <span class="fn">isPrime</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span>(n&lt;<span class="num">2</span>) <span class="kw">return false</span>;
+    <span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">2</span>; i*i&lt;=n; i++)  <span class="cm">// only check up to √n</span>
+        <span class="kw">if</span>(n%i==<span class="num">0</span>) <span class="kw">return false</span>;
+    <span class="kw">return true</span>;
+}
+<span class="cm">// Sieve — all primes up to N</span>
+<span class="kw">boolean</span>[] comp = <span class="kw">new boolean</span>[N+<span class="num">1</span>];
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">2</span>; i*i&lt;=N; i++)
+    <span class="kw">if</span>(!comp[i])
+        <span class="kw">for</span>(<span class="kw">int</span> j=i*i; j&lt;=N; j+=i) comp[j]=<span class="kw">true</span>;</pre></div></div>
+<div class="sec"><div class="sec-label">Armstrong & perfect numbers</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Special checks</span></div>
+<pre><span class="cm">// Armstrong: 153 = 1³+5³+3³ = 153</span>
+<span class="kw">static boolean</span> <span class="fn">isArmstrong</span>(<span class="kw">int</span> n) {
+    <span class="kw">int</span> t=n, d=<span class="cls">String</span>.<span class="fn">valueOf</span>(n).length(), s=<span class="num">0</span>;
+    <span class="kw">while</span>(t><span class="num">0</span>){ s+=(<span class="kw">int</span>)<span class="cls">Math</span>.<span class="fn">pow</span>(t%<span class="num">10</span>,d); t/=<span class="num">10</span>; }
+    <span class="kw">return</span> s==n;
+}
+<span class="cm">// Perfect: 28 = 1+2+4+7+14 = 28</span>
+<span class="kw">static boolean</span> <span class="fn">isPerfect</span>(<span class="kw">int</span> n) {
+    <span class="kw">int</span> s=<span class="num">1</span>;
+    <span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">2</span>; i*i&lt;=n; i++)
+        <span class="kw">if</span>(n%i==<span class="num">0</span>){ s+=i; <span class="kw">if</span>(i!=n/i) s+=n/i; }
+    <span class="kw">return</span> s==n && n!=<span class="num">1</span>;
+}</pre></div></div>
+<div class="sec"><div class="sec-label">Practice problems</div>
+<div class="links-list">
+${["Count all digits","Count odd digits","Reverse a number","Palindrome number","Largest digit","Factorial","Armstrong number","Perfect number","Prime number","Count primes till N","GCD of two numbers","LCM of two numbers","Divisors of a number"].map((l,i)=>`<a class="plink" href="https://takeuforward.org/plus/dsa" target="_blank"><span class="plink-n">${String(i+1).padStart(2,'0')}</span><span class="plink-t">${l}</span><span class="plink-arr">↗</span></a>`).join('')}
+</div></div>`},
+{id:'oop',num:'09',name:'Java OOP basics',sub:'Classes, objects, four pillars',content:`
+<div class="sec"><div class="sec-label">Four pillars</div>
+<div class="concept-row">
+<div class="cc"><h4>Encapsulation</h4><p>Private fields + public methods. Bundle data with behaviour.</p></div>
+<div class="cc"><h4>Inheritance</h4><p><code>extends</code> reuses code. "is-a" relationship.</p></div>
+<div class="cc"><h4>Polymorphism</h4><p>Overloading (compile) or overriding (runtime).</p></div>
+<div class="cc"><h4>Abstraction</h4><p>Hide complexity via abstract classes or interfaces.</p></div>
+</div></div>
+<div class="sec"><div class="sec-label">Class anatomy</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Complete example</span></div>
+<pre><span class="kw">class</span> <span class="cls">Person</span> {
+    <span class="kw">private</span> <span class="cls">String</span> name;
+    <span class="kw">private int</span>    age;
+
+    <span class="kw">public</span> <span class="cls">Person</span>(<span class="cls">String</span> name, <span class="kw">int</span> age) {
+        <span class="kw">this</span>.name = name;
+        <span class="kw">this</span>.age  = age;
+    }
+    <span class="kw">public</span> <span class="cls">String</span> <span class="fn">getName</span>()     { <span class="kw">return</span> name; }
+    <span class="kw">public void</span>   <span class="fn">setAge</span>(<span class="kw">int</span> a) { age = a; }
+
+    <span class="op">@Override</span>
+    <span class="kw">public</span> <span class="cls">String</span> <span class="fn">toString</span>() { <span class="kw">return</span> name+<span class="str">"(</span>"+age+<span class="str">")"</span>; }
+}
+<span class="cls">Person</span> p = <span class="kw">new</span> <span class="cls">Person</span>(<span class="str">"Alice"</span>,<span class="num">25</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(p); <span class="cm">// Alice(25)</span></pre></div></div>
+<div class="sec"><div class="sec-label">Custom comparator</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Sort custom objects</span></div>
+<pre>people.<span class="fn">sort</span>((p1,p2) -> p1.<span class="fn">getAge</span>() - p2.<span class="fn">getAge</span>());
+people.<span class="fn">sort</span>(<span class="cls">Comparator</span>.<span class="fn">comparingInt</span>(<span class="cls">Person</span>::<span class="fn">getAge</span>));</pre></div></div>`},
+{id:'patterns',num:'10',name:'Logic & patterns',sub:'Nested loops, pattern printing',content:`
+<div class="sec"><div class="sec-label">The mindset</div>
+<div class="prose"><p>Pattern problems train <strong>rows and columns</strong> thinking. The outer loop controls the row count. The inner loop controls what's printed per row. Finding the relationship between row number and column count is the entire challenge.</p></div>
+<div class="tip"><strong>Framework:</strong> outer loop = rows (1 to N). Inner loop = items per row. Ask "on row i, how many?" and express that as a formula in i.</div></div>
+<div class="sec"><div class="sec-label">Common patterns</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Right triangle, inverted, number, diamond</span></div>
+<pre><span class="kw">int</span> N=<span class="num">5</span>;
+<span class="cm">// Right triangle</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">1</span>;i&lt;=N;i++) {
+    <span class="kw">for</span>(<span class="kw">int</span> j=<span class="num">1</span>;j&lt;=i;j++) <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"* "</span>);
+    <span class="cls">System</span>.out.<span class="fn">println</span>();
+}
+<span class="cm">// Inverted — outer loop counts down</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=N;i>=<span class="num">1</span>;i--) {
+    <span class="kw">for</span>(<span class="kw">int</span> j=<span class="num">1</span>;j&lt;=i;j++) <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"* "</span>);
+    <span class="cls">System</span>.out.<span class="fn">println</span>();
+}
+<span class="cm">// Number — print j not i</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">1</span>;i&lt;=N;i++) {
+    <span class="kw">for</span>(<span class="kw">int</span> j=<span class="num">1</span>;j&lt;=i;j++) <span class="cls">System</span>.out.<span class="fn">print</span>(j+<span class="str">" "</span>);
+    <span class="cls">System</span>.out.<span class="fn">println</span>();
+}
+<span class="cm">// Diamond upper half</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="num">1</span>;i&lt;=N;i++) {
+    <span class="kw">for</span>(<span class="kw">int</span> j=N;j>i;j--)     <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">" "</span>);
+    <span class="kw">for</span>(<span class="kw">int</span> j=<span class="num">1</span>;j&lt;=<span class="num">2</span>*i-<span class="num">1</span>;j++) <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"*"</span>);
+    <span class="cls">System</span>.out.<span class="fn">println</span>();
+}</pre></div></div>
+<div class="sec"><div class="sec-label">Four-step solving strategy</div>
+<div class="concept-row">
+<div class="cc"><h4>1. Count rows</h4><p>How many rows? That's your outer loop bound.</p></div>
+<div class="cc"><h4>2. Count per row</h4><p>On row i, how many spaces and stars?</p></div>
+<div class="cc"><h4>3. Formula</h4><p>Express both counts as expressions in i.</p></div>
+<div class="cc"><h4>4. Code</h4><p>Translate each formula into an inner for loop.</p></div>
+</div></div>`}
+];
+
+let done=new Set(),cur=null;
+
+function renderNav(){
+  document.getElementById('topicNav').innerHTML=T.map(t=>`
+    <button class="t-btn${cur?.id===t.id?' active':''}${done.has(t.id)?' done':''}" onclick="show('${t.id}')">
+      <span class="t-num">${t.num}${done.has(t.id)?' ✓':''}</span>
+      <span class="t-name">${t.name}</span>
+    </button>`).join('');
+}
+
+function upd(){
+  const pct=Math.round(done.size/T.length*100);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pLabel').textContent=done.size+' / '+T.length;
+}
+
+function show(id){
+  const t=T.find(x=>x.id===id);if(!t)return;cur=t;
+  const idx=T.indexOf(t),prev=T[idx-1],next=T[idx+1];
+  document.getElementById('contentCard').innerHTML=`
+    <div class="card-header">
+      <div>
+        <span class="card-topic-num">${t.num} of ${T.length}</span>
+        <div class="card-title">${t.name}</div>
+        <div class="card-subtitle">${t.sub}</div>
+      </div>
+      <button class="mark-btn${done.has(id)?' done':''}" onclick="tog('${id}')">
+        ${done.has(id)?'Completed':'Mark complete'}
+      </button>
+    </div>
+    <div class="card-body">${t.content}</div>
+    <div class="card-footer">
+      ${prev?`<button class="nav-btn" onclick="show('${prev.id}')">← ${prev.name}</button>`:'<span></span>'}
+      ${next?`<button class="nav-btn nav-next" onclick="show('${next.id}')">${next.name} →</button>`:'<span></span>'}
+    </div>`;
+  renderNav();
+}
+
+function tog(id){done.has(id)?done.delete(id):done.add(id);upd();show(id);}
+
+renderNav();upd();show('java-basics');
+
+// Upvote logic
+const BASE_VOTES = 43;
+const STORAGE_KEY = 'dsa-blog-upvoted';
+let hasVoted = localStorage.getItem(STORAGE_KEY) === 'true';
+let voteCount = BASE_VOTES + (hasVoted ? 1 : 0);
+
+function renderUpvote() {
+  const btn = document.getElementById('upvoteBtn');
+  const count = document.getElementById('upvoteCount');
+  count.textContent = voteCount;
+  if (hasVoted) {
+    btn.classList.add('voted');
+  } else {
+    btn.classList.remove('voted');
+  }
+}
+
+function handleUpvote() {
+  const btn = document.getElementById('upvoteBtn');
+  if (!hasVoted) {
+    hasVoted = true;
+    voteCount++;
+    localStorage.setItem(STORAGE_KEY, 'true');
+    btn.classList.add('pop');
+    setTimeout(() => btn.classList.remove('pop'), 400);
+  } else {
+    hasVoted = false;
+    voteCount--;
+    localStorage.removeItem(STORAGE_KEY);
+  }
+  renderUpvote();
+}
+
+renderUpvote();
+</script>

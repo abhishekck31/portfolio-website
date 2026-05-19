@@ -35,7 +35,7 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `${DATA.url}/blog/${post.slug}`,
+      url: `${DATA.url}/blogs/${post.slug}`,
       images: [
         {
           url: ogImage,
@@ -80,7 +80,7 @@ export default async function Blog({
             image: post.metadata.image
               ? `${DATA.url}${post.metadata.image}`
               : `${DATA.url}/og?title=${post.metadata.title}`,
-            url: `${DATA.url}/blog/${post.slug}`,
+            url: `${DATA.url}/blogs/${post.slug}`,
             author: {
               "@type": "Person",
               name: DATA.name,
@@ -98,10 +98,17 @@ export default async function Blog({
           </p>
         </Suspense>
       </div>
-      <article
-        className="prose dark:prose-invert"
-        dangerouslySetInnerHTML={{ __html: post.source }}
-      ></article>
+      {params.slug === "things-to-know-before-starting-with-dsa-in-java" ? (
+        <iframe
+          src="/resources/dsa-introduction.html"
+          className="w-full h-[85vh] border-0 rounded-lg"
+        />
+      ) : (
+        <article
+          className="prose dark:prose-invert"
+          dangerouslySetInnerHTML={{ __html: post.source }}
+        ></article>
+      )}
     </section>
   );
 }

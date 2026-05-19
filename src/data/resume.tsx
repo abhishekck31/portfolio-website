@@ -35,6 +35,7 @@ export const DATA = {
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
+    { href: "/blogs", icon: NotebookIcon, label: "Blogs" },
   ],
   contact: {
     email: "abhishek.ck3110@gmail.com",
@@ -208,9 +209,18 @@ export const DATA = {
       location: "New Horizon College of Engineering",
       description:
         "Won 1st Place and a cash prize of ₹10,000 in the Coding Contest at Silver Spectrum Techfest-2025!It was a fantastic challenge that tested our problem-solving skills. A huge thank you to New Horizon College of Engineering for the opportunity!",
-      image: "/",
       win: "1st Place Winner",
       links: [],
+    },
+  ],
+  blogs: [
+    {
+      title: "Things to know before starting with DSA in Java",
+      href: "/resources/dsa-introduction.html",
+      dates: "May 2026",
+      description: "A complete reference covering fundamentals, complexity, collections, strings, hashing, and recursion.",
+      image: "",
+      tags: ["Java", "DSA", "Interview Prep"],
     },
   ],
 } as const;
