@@ -30,7 +30,11 @@ export default async function BlogPage() {
           <BlurFade delay={BLUR_FADE_DELAY * 2 + id * 0.05} key={post.slug}>
             <Link
               className="flex flex-col space-y-1 mb-4"
-              href={post.slug === "things-to-know-before-starting-with-dsa-in-java" ? "/resources/dsa-introduction.html" : `/blogs/${post.slug}`}
+              href={
+                post.slug === "things-to-know-before-starting-with-dsa-in-java" ? "/resources/dsa-introduction.html" :
+                post.slug === "programming-fundamentals-foundations" ? "/resources/programming-fundamentals.html" :
+                `/blogs/${post.slug}`
+              }
             >
               <div className="w-full flex flex-col">
                 <p className="tracking-tight">{post.metadata.title}</p>

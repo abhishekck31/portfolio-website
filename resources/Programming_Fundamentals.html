@@ -1,0 +1,658 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Claude dark theme tokens ── */
+:root{
+  --color-background-primary:#1a1a1a;
+  --color-background-secondary:#222222;
+  --color-background-tertiary:#2a2a2a;
+  --color-text-primary:#f0ede6;
+  --color-text-secondary:#8a8070;
+  --color-border-secondary:#333333;
+  --color-border-tertiary:#2e2e2e;
+  --color-accent:#cc5200;
+  --color-accent-dim:#3a1800;
+  --color-green:#3d7a52;
+  --color-green-dim:#1a3322;
+}
+
+body{background:var(--color-background-tertiary);color:var(--color-text-primary);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7}
+.wrap{max-width:880px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* ── Page header ── */
+.page-header{padding:2.5rem 0 2.5rem;border-bottom:0.5px solid var(--color-border-secondary);margin-bottom:2rem}
+.eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-text-secondary);font-weight:500;margin-bottom:1rem;font-family:'DM Mono',monospace}
+.page-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1;color:var(--color-text-primary);font-weight:400;margin-bottom:.85rem}
+.page-title em{font-style:italic;color:var(--color-accent)}
+.page-subtitle{font-size:14px;color:var(--color-text-secondary);max-width:460px;line-height:1.65;font-weight:300}
+.progress-row{display:flex;align-items:center;gap:12px;margin-top:1.5rem}
+.progress-track{flex:1;height:1.5px;background:var(--color-border-secondary);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--color-accent);border-radius:2px;transition:width 0.4s ease;width:0%}
+.progress-label{font-size:11px;color:var(--color-text-secondary);white-space:nowrap;font-family:'DM Mono',monospace}
+
+/* ── Topic nav ── */
+.topic-nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0;background:var(--color-border-tertiary);border:0.5px solid var(--color-border-secondary);border-radius:12px;overflow:hidden;margin-bottom:2rem}
+.t-btn{background:var(--color-background-primary);border:none;padding:16px 18px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.12s;line-height:1.3;border-right:0.5px solid var(--color-border-tertiary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.t-btn:hover{background:var(--color-background-secondary)}
+.t-btn.active{background:var(--color-accent)}
+.t-num{display:block;font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);margin-bottom:5px;letter-spacing:0.06em}
+.t-btn.active .t-num{color:rgba(255,255,255,0.55)}
+.t-btn.done .t-num{color:var(--color-green)}
+.t-name{display:block;font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.t-btn.active .t-name{color:#fff}
+
+/* ── Content card ── */
+.content-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:16px;overflow:hidden}
+.card-header{padding:1.75rem 2rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;background:var(--color-background-secondary)}
+.card-topic-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);display:block;margin-bottom:5px;letter-spacing:0.06em}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--color-text-primary);font-weight:400;line-height:1.2}
+.card-subtitle{font-size:12px;color:var(--color-text-secondary);margin-top:3px}
+.mark-btn{flex-shrink:0;padding:7px 16px;border-radius:100px;border:0.5px solid var(--color-border-secondary);background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;white-space:nowrap;font-weight:500}
+.mark-btn:hover{border-color:var(--color-text-primary);color:var(--color-text-primary)}
+.mark-btn.done{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.card-body{padding:1.75rem 2rem}
+
+/* ── Sections ── */
+.sec{margin-bottom:2rem}
+.sec-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-secondary);font-weight:500;margin-bottom:.85rem;display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace}
+.sec-label::after{content:'';flex:1;height:0.5px;background:var(--color-border-tertiary)}
+
+/* ── Prose ── */
+.prose{font-size:14px;color:var(--color-text-secondary);line-height:1.75}
+.prose p{margin-bottom:.75rem}
+.prose strong{color:var(--color-text-primary);font-weight:500}
+.prose code{font-family:'DM Mono',monospace;font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+
+/* ── Concept cards ── */
+.concept-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:.75rem 0}
+.cc{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:12px 14px}
+.cc h4{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.cc p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+
+/* ── Symbol card (flowchart symbols) ── */
+.sym-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:.75rem 0}
+.sym-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.sym-shape{display:flex;align-items:center;justify-content:center;height:44px}
+.sym-shape svg{max-width:100%;max-height:44px}
+.sym-name{font-size:11px;font-weight:600;color:var(--color-text-primary);font-family:'DM Mono',monospace;letter-spacing:0.04em}
+.sym-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.sym-eg{font-size:11px;color:var(--color-accent);font-family:'DM Mono',monospace;margin-top:2px}
+
+/* ── Flow diagram ── */
+.flow-diagram{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:1.25rem 1.5rem;margin:.85rem 0;font-family:'DM Mono',monospace;font-size:12px;line-height:1.9;color:var(--color-text-secondary);overflow-x:auto}
+.flow-diagram .fnode{color:var(--color-text-primary)}
+.flow-diagram .fdec{color:var(--color-accent)}
+.flow-diagram .fyes{color:#5a8a5a}
+.flow-diagram .fno{color:#8a5a5a}
+.flow-diagram .farr{color:var(--color-text-secondary)}
+
+/* ── Step list ── */
+.step-list{display:flex;flex-direction:column;gap:0;margin:.85rem 0}
+.step-item{display:flex;gap:14px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.step-item:last-child{border-bottom:none}
+.step-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--color-accent);min-width:24px;padding-top:2px;letter-spacing:0.05em}
+.step-body{}
+.step-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.step-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+
+/* ── Code blocks ── */
+.code-block{border:0.5px solid var(--color-border-secondary);border-radius:10px;overflow:hidden;margin:.85rem 0}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.code-dots{display:flex;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}
+.d1{background:#5a2828}.d2{background:#5a4a28}.d3{background:#2a4a2a}
+.code-lang{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);letter-spacing:0.05em}
+pre{padding:1.1rem 1.25rem;overflow-x:auto;font-family:'DM Mono',monospace;font-size:12px;line-height:1.75;color:var(--color-text-primary);background:var(--color-background-primary)}
+.kw{color:#79b8ff}.str{color:#cc5200}.num{color:#c08b40}.fn{color:#6ea8c8}.cm{color:var(--color-text-secondary);font-style:italic}.cls{color:#c07850}.op{color:#6aabab}
+
+/* ── Tables ── */
+.dtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:.85rem 0}
+.dtable th{text-align:left;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-secondary);font-family:'DM Mono',monospace}
+.dtable td{padding:9px 12px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);font-family:'DM Mono',monospace;font-size:12px;vertical-align:middle}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tr:hover td{background:var(--color-background-secondary)}
+
+/* ── Badges ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500}
+.b-green{background:var(--color-green-dim);color:#6ab88a}
+.b-amber{background:#2a1f0a;color:#c09040}
+.b-red{background:#2a1010;color:#c06060}
+.b-blue{background:#0a1a2a;color:#6090c8}
+.b-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+
+/* ── Callout boxes ── */
+.note{background:var(--color-background-secondary);border-left:2px solid var(--color-border-secondary);padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:var(--color-text-secondary);line-height:1.65}
+.note strong{color:var(--color-text-primary)}
+.tip{background:var(--color-green-dim);border-left:2px solid var(--color-green);padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:#7abf96;line-height:1.65}
+.tip strong{color:#a0d4b4}
+.warn{background:#2a1800;border-left:2px solid var(--color-accent);padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:#c09060;line-height:1.65}
+.warn strong{color:#e0b080}
+.key-box{background:var(--color-accent-dim);border:0.5px solid #5a2a00;border-radius:8px;padding:.85rem 1rem;margin:.85rem 0;font-size:13px;color:#e8a070;line-height:1.65}
+.key-box strong{color:#f0c0a0}
+
+/* ── Practice links ── */
+.links-list{display:flex;flex-direction:column;gap:5px;margin:.85rem 0}
+.plink{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;text-decoration:none;color:var(--color-text-primary);font-size:13px;transition:background 0.12s,border-color 0.12s}
+.plink:hover{background:var(--color-background-tertiary);border-color:var(--color-border-secondary)}
+.plink-n{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);min-width:18px}
+.plink-t{flex:1;font-weight:400;color:var(--color-text-primary)}
+.plink-arr{font-size:12px;color:var(--color-text-secondary)}
+
+/* ── Card footer ── */
+.card-footer{padding:1.25rem 2rem;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+.nav-btn{padding:8px 18px;border-radius:100px;border:0.5px solid var(--color-border-secondary);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.12s}
+.nav-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-next{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.nav-next:hover{opacity:0.85;color:#fff}
+
+/* ── Mistake list ── */
+.mistake-list{display:flex;flex-direction:column;gap:6px;margin:.85rem 0}
+.mistake-item{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:12px 14px}
+.mistake-tag{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#c06060;margin-bottom:4px}
+.mistake-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.mistake-fix{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.mistake-fix strong{color:#6ab88a}
+
+/* ── Pattern cards ── */
+.pattern-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:.75rem 0}
+.pat-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px 16px}
+.pat-name{font-size:12px;font-weight:600;color:var(--color-accent);font-family:'DM Mono',monospace;margin-bottom:6px;letter-spacing:0.04em}
+.pat-flow{font-size:11px;color:var(--color-text-secondary);font-family:'DM Mono',monospace;line-height:1.8;margin-bottom:6px}
+.pat-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .card-body{padding:1.25rem 1rem}
+  .card-header{padding:1.25rem 1rem}
+  .card-footer{padding:1rem}
+  .sym-row{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Programming Fundamentals — Computers, Flowcharts & Logical Thinking — interactive study reference.</h2>
+
+<div class="wrap">
+
+<div class="page-header">
+  <p class="eyebrow">Programming · Fundamentals · Logic</p>
+  <h1 class="page-title">Programming from<br>the ground up — <em>Foundations</em></h1>
+  <p class="page-subtitle">Computers, hardware, programs, bugs, flowcharts, and logical thinking — everything before the first line of code.</p>
+  <div class="progress-row">
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+    <span class="progress-label" id="pLabel">0 / 11</span>
+  </div>
+</div>
+
+<div class="topic-nav" id="topicNav"></div>
+<div class="content-card" id="contentCard">
+  <div style="padding:3.5rem 2rem;text-align:center;color:var(--color-text-secondary);font-size:14px">
+    Select a topic above to begin.
+  </div>
+</div>
+
+</div>
+
+<script>
+const T=[
+
+/* ── LECTURE 1 ── */
+{id:'what-is-computer',num:'01',name:'What is a computer?',sub:'Definition, analogy, obedient servant',content:`
+<div class="sec"><div class="sec-label">The simplest definition</div>
+<div class="prose"><p>A computer is a <strong>machine that follows instructions.</strong> Nothing more, nothing less. A fan follows one instruction — rotate when the switch is on. A computer can follow <strong>millions of instructions</strong>, one after another, at incredible speed.</p></div>
+<div class="key-box"><strong>Core mental model:</strong> Computer = Fast + Obedient + Zero Common Sense. It executes precisely what it is told. If the instructions are wrong, the result will be wrong — the computer will not "think" to fix anything on its own.</div></div>
+
+<div class="sec"><div class="sec-label">The obedient servant analogy</div>
+<div class="concept-row">
+<div class="cc"><h4>Never gets tired</h4><p>Works 24/7, no breaks, no complaints.</p></div>
+<div class="cc"><h4>Never forgets</h4><p>Perfect memory, every time.</p></div>
+<div class="cc"><h4>Exact execution</h4><p>Does exactly what is said — not what was meant.</p></div>
+<div class="cc"><h4>No common sense</h4><p>Forgets "in a glass"? It might bring water in its hands.</p></div>
+</div>
+<div class="note"><strong>The point:</strong> Forgetting to say "in a glass" is not the servant's fault — the instruction was incomplete. When your program does something unexpected, the instructions are the problem, not the machine.</div></div>
+
+<div class="sec"><div class="sec-label">Real-world connection</div>
+<div class="prose"><p>Think about the simple act of cooking rice: wash → add water → place on stove → wait → done. That is a set of step-by-step instructions with a clear goal. Programming is <strong>exactly this</strong> — instructions for a machine instead of a person. If you can follow a recipe, you can learn to program.</p></div></div>`},
+
+{id:'hardware-software',num:'02',name:'Hardware vs Software',sub:'Physical vs non-physical, body and soul',content:`
+<div class="sec"><div class="sec-label">Hardware — what you can touch</div>
+<div class="prose"><p>Hardware refers to every physical component of a device. If you can pick it up, drop it, or physically damage it — it is hardware.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>Monitor / Screen</h4><p>Displays visual output.</p></div>
+<div class="cc"><h4>Keyboard & Mouse</h4><p>Input devices.</p></div>
+<div class="cc"><h4>CPU chip</h4><p>The processor — does all thinking.</p></div>
+<div class="cc"><h4>RAM sticks</h4><p>Temporary working memory.</p></div>
+<div class="cc"><h4>Hard drive / SSD</h4><p>Permanent file storage.</p></div>
+<div class="cc"><h4>Battery</h4><p>Power source for portables.</p></div>
+</div>
+<div class="tip"><strong>Memory trick:</strong> "Hard"ware = Hard things = Physical things you can hold.</div></div>
+
+<div class="sec"><div class="sec-label">Software — what you cannot touch</div>
+<div class="prose"><p>Software is the non-physical side — the instructions stored digitally inside the machine. You cannot pick up WhatsApp or drop Windows on the floor.</p></div>
+<div class="concept-row">
+<div class="cc"><h4>Operating System</h4><p>Windows, macOS, Android, iOS — manages everything.</p></div>
+<div class="cc"><h4>Apps & Games</h4><p>WhatsApp, Chrome, Minecraft — built on top of the OS.</p></div>
+<div class="cc"><h4>Utilities</h4><p>Calculator, file manager, media player.</p></div>
+</div>
+<div class="tip"><strong>Memory trick:</strong> "Soft"ware = Soft things = Non-physical instructions living inside the device.</div></div>
+
+<div class="sec"><div class="sec-label">Body and soul analogy</div>
+<div class="concept-row">
+<div class="cc"><h4>Body = Hardware</h4><p>Physical, tangible. The shell that houses everything.</p></div>
+<div class="cc"><h4>Soul = Software</h4><p>Non-physical. The driver. Gives the body purpose.</p></div>
+</div>
+<div class="note"><strong>Without hardware</strong>, software has nowhere to run. <strong>Without software</strong>, hardware is just an expensive, lifeless box. Both are essential. Neither works alone.</div>
+<div class="prose"><p>When you buy a new phone: the physical device (screen, camera, battery) is the hardware. Android or iOS, plus all your apps, is the software.</p></div></div>`},
+
+{id:'cpu-ram-storage',num:'03',name:'CPU, RAM & Storage',sub:'The study table analogy, how they work together',content:`
+<div class="sec"><div class="sec-label">The study table analogy</div>
+<div class="prose"><p>Picture a student preparing for exams. They have a <strong>brain</strong> for thinking, a <strong>study table</strong> for books currently in use, and a <strong>bookshelf</strong> for storing everything long-term. A computer maps to this perfectly.</p></div></div>
+
+<div class="sec"><div class="sec-label">The three components</div>
+<div class="concept-row">
+<div class="cc"><h4>CPU — The Brain</h4><p>Central Processing Unit. Does all thinking, calculations, and decision-making. Faster CPU = faster computer.</p></div>
+<div class="cc"><h4>RAM — The Study Table</h4><p>Random Access Memory. Holds data currently in use. Faster than storage. <strong>Cleared when power goes off.</strong></p></div>
+<div class="cc"><h4>Storage — The Bookshelf</h4><p>Hard drive or SSD. Stores everything permanently. Survives shutdown. Slower than RAM.</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">How they work together — opening WhatsApp</div>
+<div class="flow-diagram">
+<span class="fnode">[ WhatsApp lives in Storage ]</span> <span class="farr">──────────────────────────────────────────────</span>
+         <span class="farr">↓</span>  You tap the icon
+<span class="fnode">[ OS loads WhatsApp into RAM ]</span>  <span class="farr">───────────────────────────────────</span>
+         <span class="farr">↓</span>  Now it's ready for fast access
+<span class="fnode">[ CPU executes WhatsApp's instructions ]</span>  <span class="farr">──────────────────────</span>
+         <span class="farr">↓</span>  "Connect to servers, fetch messages, render UI"
+<span class="fnode">[ App appears on your screen ]</span>
+         <span class="farr">↓</span>  You close the app
+<span class="fnode">[ RAM freed — WhatsApp still safely in Storage ]</span></div></div>
+
+<div class="sec"><div class="sec-label">Quick reference</div>
+<table class="dtable"><thead><tr><th>Component</th><th>Analogy</th><th>Memory type</th><th>Speed</th><th>Cleared on shutdown?</th></tr></thead><tbody>
+<tr><td>CPU</td><td>Brain</td><td>—</td><td>Fastest</td><td>—</td></tr>
+<tr><td>RAM</td><td>Study table</td><td>Temporary</td><td>Very fast</td><td><span class="badge b-red">Yes</span></td></tr>
+<tr><td>Storage (HDD/SSD)</td><td>Bookshelf</td><td>Permanent</td><td>Slower</td><td><span class="badge b-green">No</span></td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">Why this matters when buying a device</div>
+<div class="concept-row">
+<div class="cc"><h4>More RAM</h4><p>Run more apps simultaneously without slowdown. Bigger table.</p></div>
+<div class="cc"><h4>Faster CPU</h4><p>Apps respond faster. Smarter, quicker brain.</p></div>
+<div class="cc"><h4>More Storage</h4><p>Keep more photos, videos, and apps. Bigger bookshelf.</p></div>
+</div></div>`},
+
+{id:'what-is-program',num:'04',name:'What is a program?',sub:'Instructions, recipes, real-world examples',content:`
+<div class="sec"><div class="sec-label">The definition</div>
+<div class="prose"><p>A <strong>program</strong> is a set of instructions that tells a computer what to do. Not magic. Not complex wizardry. A list of steps — written in a specific language — that a computer reads and executes one by one.</p></div>
+<div class="key-box"><strong>The chai analogy:</strong> Making tea = a program. Take pan → add water → add tea leaves → boil → add milk → add sugar → filter → serve. Step-by-step. Clear goal. If any step is wrong or missing, the result changes. A computer program works identically — except a machine follows the steps.</div></div>
+
+<div class="sec"><div class="sec-label">Programs you use every day</div>
+<table class="dtable"><thead><tr><th>App</th><th>Example instruction running inside it</th></tr></thead><tbody>
+<tr><td>Calculator</td><td>"When user presses +, add the two numbers and display the result"</td></tr>
+<tr><td>Alarm app</td><td>"When time equals 6:00 AM, trigger a loud notification sound"</td></tr>
+<tr><td>WhatsApp</td><td>"When user presses Send, transmit the message to the recipient via the internet"</td></tr>
+<tr><td>Zomato</td><td>"When user searches 'Biryani', query nearby restaurants and display results"</td></tr>
+<tr><td>Traffic light</td><td>"Stay RED for 60s → YELLOW for 5s → GREEN for 60s → repeat forever"</td></tr>
+<tr><td>ATM machine</td><td>"If PIN matches and balance is sufficient, dispense the requested amount"</td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">Who writes these programs?</div>
+<div class="concept-row">
+<div class="cc"><h4>Programmers</h4><p>Also called developers, coders, software engineers. People who write instructions in a language computers understand.</p></div>
+<div class="cc"><h4>That's you</h4><p>The skill you are learning right now. Writing instructions. Building the things others use.</p></div>
+</div>
+<div class="tip"><strong>Shift in perspective:</strong> Right now you are a user of programs. After learning to code, you become a creator of programs. You write the instructions. Computers obey.</div></div>`},
+
+{id:'bugs-debugging',num:'05',name:'Bugs & debugging',sub:'What goes wrong, why, and how to fix it',content:`
+<div class="sec"><div class="sec-label">What is a bug?</div>
+<div class="prose"><p>A <strong>bug</strong> is a mistake in a program's instructions that causes it to behave incorrectly. Since programs are written by humans, they are not always perfect. When the instructions are flawed, the output reflects that — and the computer has no idea anything is wrong.</p></div>
+<div class="note"><strong>The chai analogy:</strong> The correct recipe calls for sugar. Your recipe says salt instead. The person following it does exactly as told. The chai is terrible. The follower (computer) did nothing wrong — the recipe (program) had a bug.</div></div>
+
+<div class="sec"><div class="sec-label">Real-world bugs you have seen</div>
+<div class="concept-row">
+<div class="cc"><h4>App crashes</h4><p>A bug caused an unexpected state the developers didn't account for.</p></div>
+<div class="cc"><h4>Game freezes</h4><p>An infinite loop or unhandled condition locked the program.</p></div>
+<div class="cc"><h4>Wrong price shown</h4><p>A calculation bug produced an incorrect value.</p></div>
+<div class="cc"><h4>ATM error</h4><p>An edge case the program wasn't written to handle.</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Origin of the word "bug"</div>
+<div class="key-box"><strong>1947, Harvard University.</strong> A computer stopped working. Engineers searched and found a real moth stuck inside the machine, causing a short circuit. They taped it into their logbook and wrote: "First actual case of bug being found." The word stuck. Today "bug" means any error in a program — no moths required.</div></div>
+
+<div class="sec"><div class="sec-label">What is debugging?</div>
+<div class="prose"><p><strong>Debugging</strong> is the process of finding and fixing bugs. It is detective work — trace what went wrong, identify the faulty instruction, and correct it. Every programmer debugs, every day. Even the best engineers create bugs. The skill lies in finding and fixing them systematically.</p></div>
+<div class="tip"><strong>Beginner mindset:</strong> When code does not work, do not panic. Do not assume you are bad at this. Calmly ask: "Which instruction could have caused this?" That systematic approach is what separates good developers from frustrated ones.</div></div>`},
+
+{id:'programming-languages',num:'06',name:'Programming languages',sub:'Binary, why languages exist, popular choices',content:`
+<div class="sec"><div class="sec-label">The computer's native language</div>
+<div class="prose"><p>At the hardware level, computers understand only <strong>binary</strong> — a system made entirely of <code>0</code>s and <code>1</code>s. Everything is ON or OFF. YES or NO. 1 or 0. Here is what the word "Hello" looks like in binary:</p></div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Binary — machine language</span></div>
+<pre><span class="cm">// "Hello" in binary (what the CPU actually reads)</span>
+01001000 01100101 01101100 01101100 01101111
+
+<span class="cm">// Nobody writes programs this way. That's the problem.</span></pre></div>
+<div class="note">Writing entire programs in binary is practically impossible for humans. Programming languages solve this.</div></div>
+
+<div class="sec"><div class="sec-label">The translator analogy</div>
+<div class="prose"><p>You speak Hindi. The person you need to communicate with speaks only Japanese. You need a translator in the middle. Programming languages work the same way — they sit between human thought and machine execution.</p></div>
+<div class="flow-diagram">You write Python  ──→  Compiler / Interpreter  ──→  Binary (0s and 1s)  ──→  CPU executes</div></div>
+
+<div class="sec"><div class="sec-label">Popular languages and what they're used for</div>
+<table class="dtable"><thead><tr><th>Language</th><th>Best for</th><th>Difficulty</th></tr></thead><tbody>
+<tr><td>Python</td><td>Beginners, AI, data science, automation</td><td><span class="badge b-green">Easy</span></td></tr>
+<tr><td>JavaScript</td><td>Web apps, browser interactivity, servers (Node.js)</td><td><span class="badge b-green">Easy</span></td></tr>
+<tr><td>Java</td><td>Android apps, enterprise systems, DSA</td><td><span class="badge b-amber">Medium</span></td></tr>
+<tr><td>C / C++</td><td>Games, operating systems, performance-critical tools</td><td><span class="badge b-red">Hard</span></td></tr>
+<tr><td>Swift</td><td>iPhone and iPad apps (iOS)</td><td><span class="badge b-amber">Medium</span></td></tr>
+<tr><td>SQL</td><td>Working with databases</td><td><span class="badge b-green">Easy</span></td></tr>
+</tbody></table>
+<div class="tip"><strong>Critical insight:</strong> Once you truly understand one language — the logic, the structure, the way of thinking — every other language becomes much easier to pick up. Concepts transfer. Only the syntax changes. Start with one. Master it. The rest follows.</div></div>`},
+
+/* ── LECTURE 2 ── */
+{id:'why-flowcharts',num:'07',name:'Why flowcharts?',sub:'Think before you code, the blueprint rule',content:`
+<div class="sec"><div class="sec-label">The golden rule</div>
+<div class="key-box"><strong>Think before you code.</strong> A flowchart is your thinking tool. Draw the plan first — then translate it into code. Skipping this step is the number one reason beginners get stuck and frustrated.</div></div>
+
+<div class="sec"><div class="sec-label">The blueprint analogy</div>
+<div class="concept-row">
+<div class="cc"><h4>Building a house</h4><p>You don't start digging randomly. You draw a blueprint first — then build. The blueprint catches design problems before they become expensive mistakes in concrete.</p></div>
+<div class="cc"><h4>Writing a program</h4><p>You don't start typing code immediately. You draw a flowchart first — then code. The flowchart catches logic problems before they become confusing bugs.</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Why flowcharts specifically?</div>
+<div class="concept-row">
+<div class="cc"><h4>Clarifies thinking</h4><p>Forces you to articulate every step before writing a single line.</p></div>
+<div class="cc"><h4>Shows mistakes early</h4><p>Much easier to fix a logic error on paper than in code.</p></div>
+<div class="cc"><h4>Language-independent</h4><p>The same flowchart works for Python, Java, or any other language.</p></div>
+<div class="cc"><h4>Easy to communicate</h4><p>Show it to a teammate and they immediately understand the logic.</p></div>
+<div class="cc"><h4>Visual = intuitive</h4><p>Humans understand diagrams faster than text instructions.</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">The bridge</div>
+<div class="flow-diagram">Problem in plain English  ──→  Flowchart (visual plan)  ──→  Code (instructions)
+
+Without flowchart:  Problem  ──→  ??? confusion  ──→  Code that might not work
+With flowchart:     Problem  ──→  Clear logic   ──→  Code that works first time</div>
+<div class="tip"><strong>Real example:</strong> Coding a pass/fail checker without planning leads to missed edge cases (what if marks = exactly 40?). A flowchart makes every branch visible before you type anything.</div></div>`},
+
+{id:'flowchart-symbols',num:'08',name:'Flowchart symbols',sub:'Oval, rectangle, diamond, parallelogram, arrows',content:`
+<div class="sec"><div class="sec-label">The five core symbols</div>
+<div class="prose"><p>Just like letters make words, symbols make flowcharts. There are only five you need to know. Master these and you can diagram any program.</p></div>
+
+<div class="sym-row">
+<div class="sym-card">
+  <div class="sym-shape">
+    <svg viewBox="0 0 120 44" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="60" cy="22" rx="56" ry="18" fill="none" stroke="#cc5200" stroke-width="1.5"/>
+      <text x="60" y="27" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#cc5200">START / END</text>
+    </svg>
+  </div>
+  <div class="sym-name">Oval / Ellipse</div>
+  <div class="sym-desc">Entry and exit points. Every flowchart starts with START and ends with END or STOP.</div>
+  <div class="sym-eg">→ "Start", "End", "Stop"</div>
+</div>
+<div class="sym-card">
+  <div class="sym-shape">
+    <svg viewBox="0 0 120 44" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="8" width="104" height="28" fill="none" stroke="#79b8ff" stroke-width="1.5" rx="2"/>
+      <text x="60" y="27" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#79b8ff">PROCESS</text>
+    </svg>
+  </div>
+  <div class="sym-name">Rectangle</div>
+  <div class="sym-desc">An action or operation. Any step that does something — calculation, assignment, action.</div>
+  <div class="sym-eg">→ "sum = a + b", "Print result"</div>
+</div>
+<div class="sym-card">
+  <div class="sym-shape">
+    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="60,4 116,25 60,46 4,25" fill="none" stroke="#e0b080" stroke-width="1.5"/>
+      <text x="60" y="29" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#e0b080">DECISION</text>
+    </svg>
+  </div>
+  <div class="sym-name">Diamond</div>
+  <div class="sym-desc">A question with exactly two exits — YES/TRUE and NO/FALSE. Every decision branches here.</div>
+  <div class="sym-eg">→ "Is age >= 18?", "Is PIN correct?"</div>
+</div>
+<div class="sym-card">
+  <div class="sym-shape">
+    <svg viewBox="0 0 120 44" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="22,8 114,8 98,36 6,36" fill="none" stroke="#6ab88a" stroke-width="1.5"/>
+      <text x="60" y="27" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#6ab88a">INPUT / OUTPUT</text>
+    </svg>
+  </div>
+  <div class="sym-name">Parallelogram</div>
+  <div class="sym-desc">Data flowing in (input from user) or out (output displayed to user).</div>
+  <div class="sym-eg">→ "Read age", "Display result"</div>
+</div>
+<div class="sym-card">
+  <div class="sym-shape">
+    <svg viewBox="0 0 120 44" xmlns="http://www.w3.org/2000/svg">
+      <line x1="10" y1="22" x2="90" y2="22" stroke="#8a8070" stroke-width="1.5"/>
+      <polygon points="90,16 110,22 90,28" fill="#8a8070"/>
+    </svg>
+  </div>
+  <div class="sym-name">Arrows / Flow Lines</div>
+  <div class="sym-desc">Connect all boxes and show the direction of execution. Flow goes top-to-bottom, left-to-right by default.</div>
+  <div class="sym-eg">→ Connects every element in order</div>
+</div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Diamond rule — always two exits</div>
+<div class="warn"><strong>A decision diamond always has exactly two exits.</strong> One for YES (condition is true) and one for NO (condition is false). If your diamond has only one exit, you have made an error. Label both arrows clearly.</div>
+<div class="flow-diagram">                Is age >= 18?
+                /           \
+            YES /             \ NO
+              /               \
+    [Show "Eligible"]   [Show "Not eligible"]
+              \               /
+               \             /
+                → → [ END ] ← ←</div></div>`},
+
+{id:'reading-flowcharts',num:'09',name:'Reading flowcharts',sub:'Step-by-step walkthroughs of real examples',content:`
+<div class="sec"><div class="sec-label">Example 1 — simple addition (sequential)</div>
+<div class="flow-diagram"><span class="fnode">[ START ]</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Read first number → a ]</span>         <span class="cm">← parallelogram (input)</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Read second number → b ]</span>        <span class="cm">← parallelogram (input)</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ sum = a + b ]</span>                    <span class="cm">← rectangle (process)</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Print sum ]</span>                      <span class="cm">← parallelogram (output)</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ END ]</span></div>
+<div class="note"><strong>Pattern:</strong> Sequential — steps go one after another, no branches. This is the simplest type of flowchart.</div></div>
+
+<div class="sec"><div class="sec-label">Example 2 — even or odd (decision)</div>
+<div class="flow-diagram"><span class="fnode">[ START ]</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Read number → n ]</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ remainder = n % 2 ]</span>             <span class="cm">← % gives the remainder after division</span>
+    <span class="farr">↓</span>
+<span class="fdec">◇ Is remainder == 0? ◇</span>
+   <span class="fyes">YES ↙</span>              <span class="fno">↘ NO</span>
+<span class="fyes">[ Print "Even" ]</span>    <span class="fno">[ Print "Odd" ]</span>
+        <span class="farr">↘             ↙</span>
+         <span class="fnode">[ END ]</span></div>
+<div class="note"><strong>Pattern:</strong> Conditional — the flowchart splits into two paths at the decision diamond, then both paths rejoin at END.</div></div>
+
+<div class="sec"><div class="sec-label">Example 3 — maximum of two numbers</div>
+<div class="flow-diagram"><span class="fnode">[ START ]</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Read a, b ]</span>
+    <span class="farr">↓</span>
+<span class="fdec">◇ Is a > b? ◇</span>
+ <span class="fyes">YES ↙</span>          <span class="fno">↘ NO</span>
+<span class="fyes">[ Print a ]</span>    <span class="fno">[ Print b ]</span>
+      <span class="farr">↘           ↙</span>
+       <span class="fnode">[ END ]</span></div>
+<div class="tip"><strong>Note:</strong> Both the YES and NO paths lead to END. Every path in a flowchart must eventually reach END — no dead ends allowed.</div></div>
+
+<div class="sec"><div class="sec-label">Example 4 — ATM withdrawal (complex, multiple decisions)</div>
+<div class="flow-diagram"><span class="fnode">[ START ]</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Display "Insert card" ]</span>
+    <span class="farr">↓</span>
+<span class="fnode">[ Read PIN ]</span>
+    <span class="farr">↓</span>
+<span class="fdec">◇ Is PIN correct? ◇</span>
+ <span class="fno">NO ↙</span>                  <span class="fyes">↘ YES</span>
+<span class="fno">[ Show "Wrong PIN" ]</span>      <span class="fnode">[ Display options ]</span>
+<span class="fno">[ Eject card ]</span>               <span class="farr">↓</span>
+<span class="fno">[ END ]</span>                  <span class="fnode">[ Enter amount ]</span>
+                              <span class="farr">↓</span>
+                    <span class="fdec">◇ Is balance >= amount? ◇</span>
+                   <span class="fno">NO ↙</span>              <span class="fyes">↘ YES</span>
+               <span class="fno">[ Show "Insufficient" ]</span>  <span class="fyes">[ Deduct amount ]</span>
+               <span class="fno">[ END ]</span>              <span class="fyes">[ Dispense cash ]</span>
+                                     <span class="fyes">[ Eject card ]</span>
+                                     <span class="fyes">[ END ]</span></div>
+<div class="note"><strong>Key observation:</strong> Some paths reach END early (wrong PIN, insufficient balance). This is valid — it represents the program exiting under certain conditions. Complex real-world programs often have multiple exit points.</div></div>`},
+
+{id:'drawing-flowcharts',num:'10',name:'Drawing flowcharts',sub:'5-step method, patterns, common mistakes',content:`
+<div class="sec"><div class="sec-label">The 5-step problem-solving method</div>
+<div class="step-list">
+<div class="step-item"><div class="step-num">01</div><div class="step-body"><div class="step-title">Understand the problem</div><div class="step-desc">Read carefully. Identify: What is the input? What is the expected output? What needs to happen in between?</div></div></div>
+<div class="step-item"><div class="step-num">02</div><div class="step-desc"><div class="step-title">Break into smaller steps</div><div class="step-desc">Don't think about the whole problem at once. Break it into the smallest possible pieces. One action per box.</div></div></div>
+<div class="step-item"><div class="step-num">03</div><div class="step-body"><div class="step-title">Draw the flowchart</div><div class="step-desc">Use the correct symbols. Connect with arrows. Show every decision clearly with YES/NO labels.</div></div></div>
+<div class="step-item"><div class="step-num">04</div><div class="step-body"><div class="step-title">Verify with test cases</div><div class="step-desc">Trace through with different inputs: normal case, edge cases, boundary values. Does every case produce the correct result?</div></div></div>
+<div class="step-item"><div class="step-num">05</div><div class="step-body"><div class="step-title">Then write code</div><div class="step-desc">Once the flowchart is verified, translating to code is straightforward. The logic is already solved — you just convert it to syntax.</div></div></div>
+</div>
+<div class="key-box"><strong>Flowchart first. Code second. Always.</strong> This order saves hours of frustration.</div></div>
+
+<div class="sec"><div class="sec-label">Three common flow patterns</div>
+<div class="pattern-row">
+<div class="pat-card">
+  <div class="pat-name">Sequential</div>
+  <div class="pat-flow">START → A → B → C → END</div>
+  <div class="pat-desc">Steps happen one after another with no branching. The simplest pattern. Example: calculate rectangle area.</div>
+</div>
+<div class="pat-card">
+  <div class="pat-name">Conditional</div>
+  <div class="pat-flow">START → A → ◇ Decision → YES/NO branches → END</div>
+  <div class="pat-desc">Has at least one decision diamond. Flow splits into branches. Example: check if eligible to vote.</div>
+</div>
+<div class="pat-card">
+  <div class="pat-name">Loop (Repetition)</div>
+  <div class="pat-flow">START → A → ◇ Check? → YES → B → back to A → NO → END</div>
+  <div class="pat-desc">Has a back-arrow that returns to a previous step. Repeats until a condition is met. Example: print 1 to 10.</div>
+</div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Common mistakes to avoid</div>
+<div class="mistake-list">
+<div class="mistake-item">
+  <div class="mistake-tag">Mistake 01</div>
+  <div class="mistake-title">Missing START or END</div>
+  <div class="mistake-fix">Every flowchart must begin with START and terminate with END. No exceptions. <strong>Fix: always add both before drawing anything else.</strong></div>
+</div>
+<div class="mistake-item">
+  <div class="mistake-tag">Mistake 02</div>
+  <div class="mistake-title">Unlabeled decision arrows</div>
+  <div class="mistake-fix">A diamond with two unlabeled arrows is ambiguous. Which path is YES? Which is NO? <strong>Fix: always label both exits of every decision diamond.</strong></div>
+</div>
+<div class="mistake-item">
+  <div class="mistake-tag">Mistake 03</div>
+  <div class="mistake-title">Dead-end paths</div>
+  <div class="mistake-fix">A path that leads nowhere leaves the program in an undefined state. <strong>Fix: every single path must eventually connect to END.</strong></div>
+</div>
+<div class="mistake-item">
+  <div class="mistake-tag">Mistake 04</div>
+  <div class="mistake-title">Missing or directionless arrows</div>
+  <div class="mistake-fix">Boxes without connecting arrows make the flow ambiguous. <strong>Fix: connect every box with arrows. Default direction is top-to-bottom, left-to-right.</strong></div>
+</div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Tools for drawing</div>
+<div class="concept-row">
+<div class="cc"><h4>Pen and paper</h4><p>Best for learning. Fast, easy to erase, no software needed. Start here.</p></div>
+<div class="cc"><h4>draw.io / diagrams.net</h4><p>Free online tool. Drag-and-drop symbols. Professional output. Great for sharing.</p></div>
+<div class="cc"><h4>Excalidraw</h4><p>Free, sketch-style. Good for quick whiteboard-style diagrams.</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Practice exercises</div>
+<div class="links-list">
+${["Draw a flowchart: check if a number is positive, negative, or zero","Draw a flowchart: calculate area of a circle (π × r × r)","Draw a flowchart: simple login system (username = admin, password = 1234)","Draw a flowchart: check if a year is a leap year","Draw a flowchart: find the largest of three numbers","Draw a flowchart: print numbers from 1 to N (loop pattern)"].map((l,i)=>`<div class="plink"><span class="plink-n">${String(i+1).padStart(2,'0')}</span><span class="plink-t">${l}</span></div>`).join('')}
+</div></div>`},
+
+{id:'flowchart-vs-pseudocode',num:'11',name:'Flowcharts vs Pseudocode',sub:'When to use which, formats compared',content:`
+<div class="sec"><div class="sec-label">What is pseudocode?</div>
+<div class="prose"><p><strong>Pseudocode</strong> is English-like text that looks similar to code but is not actual code. It describes the logic of a program in structured plain language — no specific syntax, no compiler required. It reads like instructions written for a programmer, not a machine.</p></div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">Pseudocode — pass/fail checker</span></div>
+<pre><span class="cm">// Same logic as the flowchart, written as structured text</span>
+START
+  READ marks
+  IF marks >= 40 THEN
+    PRINT "Pass"
+  ELSE
+    PRINT "Fail"
+  END IF
+END</pre></div></div>
+
+<div class="sec"><div class="sec-label">Comparison</div>
+<table class="dtable"><thead><tr><th>Aspect</th><th>Flowchart</th><th>Pseudocode</th></tr></thead><tbody>
+<tr><td>Format</td><td>Visual — boxes, arrows, shapes</td><td>Text — structured English lines</td></tr>
+<tr><td>Best for</td><td>Visual learners, showing flow clearly</td><td>Text-based thinkers, complex logic</td></tr>
+<tr><td>Decisions</td><td>Excellent — diamond makes branches obvious</td><td>Good — IF/ELSE is clear</td></tr>
+<tr><td>Calculations</td><td>Adequate — box for formula</td><td>Excellent — write exactly as math</td></tr>
+<tr><td>Drawing speed</td><td>Slower — shapes to draw</td><td>Faster — just type</td></tr>
+<tr><td>Team communication</td><td>Excellent — anyone can read it</td><td>Good — requires familiarity</td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">When to use which</div>
+<div class="concept-row">
+<div class="cc"><h4>Use flowchart when…</h4><p>Learning a new concept, explaining to someone else, the problem has many decision branches, or visual thinking helps you.</p></div>
+<div class="cc"><h4>Use pseudocode when…</h4><p>The problem involves complex calculations, you need to think through logic quickly, or you're translating directly to code.</p></div>
+<div class="cc"><h4>Use both when…</h4><p>The problem is complex and involves both branching decisions and detailed calculations.</p></div>
+</div>
+<div class="tip"><strong>For beginners:</strong> Flowcharts are better at this stage. They build visual thinking and make the logic of programs tangible before syntax gets in the way.</div></div>
+
+<div class="sec"><div class="sec-label">What comes next</div>
+<div class="prose"><p>You now understand what a computer is, how it stores and processes information, what programs and bugs are, why programming languages exist, and how to plan programs with flowcharts before writing a single line of code.</p><p>The next step is learning an actual programming language and writing your first real program. The thinking skills you've built here — breaking problems into steps, identifying decisions, tracing logic — are the foundation everything else is built on.</p></div>
+<div class="key-box"><strong>Flowcharts are your friend.</strong> They make coding 10× easier. Master the habit of planning before coding, and you will avoid the majority of frustrations that stop beginners in their tracks.</div></div>`}
+
+];
+
+let done=new Set(),cur=null;
+
+function renderNav(){
+  document.getElementById('topicNav').innerHTML=T.map(t=>`
+    <button class="t-btn${cur?.id===t.id?' active':''}${done.has(t.id)?' done':''}" onclick="show('${t.id}')">
+      <span class="t-num">${t.num}${done.has(t.id)?' ✓':''}</span>
+      <span class="t-name">${t.name}</span>
+    </button>`).join('');
+}
+
+function upd(){
+  const pct=Math.round(done.size/T.length*100);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pLabel').textContent=done.size+' / '+T.length;
+}
+
+function show(id){
+  const t=T.find(x=>x.id===id);if(!t)return;cur=t;
+  const idx=T.indexOf(t),prev=T[idx-1],next=T[idx+1];
+  document.getElementById('contentCard').innerHTML=`
+    <div class="card-header">
+      <div>
+        <span class="card-topic-num">${t.num} of ${T.length}</span>
+        <div class="card-title">${t.name}</div>
+        <div class="card-subtitle">${t.sub}</div>
+      </div>
+      <button class="mark-btn${done.has(id)?' done':''}" onclick="tog('${id}')">
+        ${done.has(id)?'Completed':'Mark complete'}
+      </button>
+    </div>
+    <div class="card-body">${t.content}</div>
+    <div class="card-footer">
+      ${prev?`<button class="nav-btn" onclick="show('${prev.id}')">← ${prev.name}</button>`:'<span></span>'}
+      ${next?`<button class="nav-btn nav-next" onclick="show('${next.id}')">${next.name} →</button>`:'<span></span>'}
+    </div>`;
+  renderNav();
+}
+
+function tog(id){done.has(id)?done.delete(id):done.add(id);upd();show(id);}
+
+renderNav();upd();show('what-is-computer');
+</script>

@@ -215,6 +215,14 @@ export const DATA = {
   ],
   blogs: [
     {
+      title: "Programming from the ground up — Foundations",
+      href: "/resources/programming-fundamentals.html",
+      dates: "May 2026",
+      description: "Computers, hardware, programs, bugs, flowcharts, and logical thinking — everything before the first line of code.",
+      image: "",
+      tags: ["Programming", "Fundamentals", "Logic"],
+    },
+    {
       title: "Things to know before starting with DSA in Java",
       href: "/resources/dsa-introduction.html",
       dates: "May 2026",
