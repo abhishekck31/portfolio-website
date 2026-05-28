@@ -103,6 +103,11 @@ export default async function Blog({
           src="/resources/dsa-introduction.html"
           className="w-full h-[85vh] border-0 rounded-lg"
         />
+      ) : params.slug === "time-and-space-complexity" ? (
+        <iframe
+          src="/resources/complexity-blog-post.html"
+          className="w-full h-[85vh] border-0 rounded-lg"
+        />
       ) : (
         <article
           className="prose dark:prose-invert"

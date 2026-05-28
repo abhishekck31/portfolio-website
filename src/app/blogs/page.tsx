@@ -33,6 +33,7 @@ export default async function BlogPage() {
               href={
                 post.slug === "things-to-know-before-starting-with-dsa-in-java" ? "/resources/dsa-introduction.html" :
                 post.slug === "programming-fundamentals-foundations" ? "/resources/programming-fundamentals.html" :
+                post.slug === "time-and-space-complexity" ? "/resources/complexity-blog-post.html" :
                 `/blogs/${post.slug}`
               }
             >

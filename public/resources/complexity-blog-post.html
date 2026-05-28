@@ -1,0 +1,647 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --color-background-primary:#1a1a1a;
+  --color-background-secondary:#222222;
+  --color-background-tertiary:#2a2a2a;
+  --color-text-primary:#f0ede6;
+  --color-text-secondary:#8a8070;
+  --color-border-secondary:#333333;
+  --color-border-tertiary:#2e2e2e;
+  --color-accent:#cc5200;
+  --color-accent-dim:#3a1800;
+  --color-green:#3d7a52;
+  --color-green-dim:#1a3322;
+}
+
+body{background:var(--color-background-tertiary);color:var(--color-text-primary);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7}
+.wrap{max-width:880px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* ── Page header ── */
+.page-header{padding:2.5rem 0 2.5rem;border-bottom:0.5px solid var(--color-border-secondary);margin-bottom:2rem}
+.eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-text-secondary);font-weight:500;margin-bottom:1rem;font-family:'DM Mono',monospace}
+.page-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1;color:var(--color-text-primary);font-weight:400;margin-bottom:.85rem}
+.page-title em{font-style:italic;color:var(--color-accent)}
+.page-subtitle{font-size:14px;color:var(--color-text-secondary);max-width:520px;line-height:1.65;font-weight:300}
+.progress-row{display:flex;align-items:center;gap:12px;margin-top:1.5rem}
+.progress-track{flex:1;height:1.5px;background:var(--color-border-secondary);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--color-accent);border-radius:2px;transition:width 0.4s ease;width:0%}
+.progress-label{font-size:11px;color:var(--color-text-secondary);white-space:nowrap;font-family:'DM Mono',monospace}
+
+/* ── Topic nav ── */
+.topic-nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0;background:var(--color-border-tertiary);border:0.5px solid var(--color-border-secondary);border-radius:12px;overflow:hidden;margin-bottom:2rem}
+.t-btn{background:var(--color-background-primary);border:none;padding:16px 18px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.12s;line-height:1.3;border-right:0.5px solid var(--color-border-tertiary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.t-btn:hover{background:var(--color-background-secondary)}
+.t-btn.active{background:var(--color-accent)}
+.t-num{display:block;font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);margin-bottom:5px;letter-spacing:0.06em}
+.t-btn.active .t-num{color:rgba(255,255,255,0.55)}
+.t-btn.done .t-num{color:var(--color-green)}
+.t-name{display:block;font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.t-btn.active .t-name{color:#fff}
+
+/* ── Content card ── */
+.content-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:16px;overflow:hidden}
+.card-header{padding:1.75rem 2rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;background:var(--color-background-secondary)}
+.card-topic-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);display:block;margin-bottom:5px;letter-spacing:0.06em}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--color-text-primary);font-weight:400;line-height:1.2}
+.card-subtitle{font-size:12px;color:var(--color-text-secondary);margin-top:3px}
+.mark-btn{flex-shrink:0;padding:7px 16px;border-radius:100px;border:0.5px solid var(--color-border-secondary);background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;white-space:nowrap;font-weight:500}
+.mark-btn:hover{border-color:var(--color-text-primary);color:var(--color-text-primary)}
+.mark-btn.done{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.card-body{padding:1.75rem 2rem}
+
+/* ── Sections ── */
+.sec{margin-bottom:2rem}
+.sec-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-secondary);font-weight:500;margin-bottom:.85rem;display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace}
+.sec-label::after{content:'';flex:1;height:0.5px;background:var(--color-border-tertiary)}
+
+/* ── Prose ── */
+.prose{font-size:14px;color:var(--color-text-secondary);line-height:1.75}
+.prose p{margin-bottom:.75rem}
+.prose strong{color:var(--color-text-primary);font-weight:500}
+.prose code{font-family:'DM Mono',monospace;font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+
+/* ── Concept cards ── */
+.concept-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin:.75rem 0}
+.cc{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:12px 14px}
+.cc h4{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.cc p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.cc .badge{margin-top:6px}
+
+/* ── Code blocks ── */
+.code-block{border:0.5px solid var(--color-border-secondary);border-radius:10px;overflow:hidden;margin:.85rem 0}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.code-dots{display:flex;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}
+.d1{background:#5a2828}.d2{background:#5a4a28}.d3{background:#2a4a2a}
+.code-lang{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);letter-spacing:0.05em}
+.code-badge{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-accent);background:var(--color-accent-dim);padding:2px 8px;border-radius:100px}
+pre{padding:1.1rem 1.25rem;overflow-x:auto;font-family:'DM Mono',monospace;font-size:12px;line-height:1.75;color:var(--color-text-primary);background:var(--color-background-primary)}
+.kw{color:#79b8ff}.str{color:#cc5200}.num{color:#c08b40}.fn{color:#6ea8c8}.cm{color:var(--color-text-secondary);font-style:italic}.cls{color:#c07850}.op{color:#6aabab}
+
+/* ── Tables ── */
+.dtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:.85rem 0}
+.dtable th{text-align:left;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-secondary);font-family:'DM Mono',monospace}
+.dtable td{padding:9px 12px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);font-family:'DM Mono',monospace;font-size:12px;vertical-align:middle}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tr:hover td{background:var(--color-background-secondary)}
+.o{font-style:italic;color:var(--color-accent)}
+
+/* ── Badges ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500}
+.b-green{background:var(--color-green-dim);color:#6ab88a}
+.b-amber{background:#2a1f0a;color:#c09040}
+.b-red{background:#2a1010;color:#c06060}
+.b-blue{background:#0a1a2a;color:#6090c8}
+.b-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+
+/* ── Callout boxes ── */
+.note{background:var(--color-background-secondary);border-left:2px solid var(--color-border-secondary);padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:var(--color-text-secondary);line-height:1.65}
+.note strong{color:var(--color-text-primary)}
+.tip{background:var(--color-green-dim);border-left:2px solid var(--color-green);padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:#7abf96;line-height:1.65}
+.tip strong{color:#a0d4b4}
+.warn{background:#2a1800;border-left:2px solid var(--color-accent);padding:.75rem 1rem;margin:.85rem 0;font-size:13px;color:#c09060;line-height:1.65}
+.warn strong{color:#e0b080}
+.key-box{background:var(--color-accent-dim);border:0.5px solid #5a2a00;border-radius:8px;padding:.85rem 1rem;margin:.85rem 0;font-size:13px;color:#e8a070;line-height:1.65}
+.key-box strong{color:#f0c0a0}
+
+/* ── Step list ── */
+.step-list{display:flex;flex-direction:column;gap:0;margin:.85rem 0}
+.step-item{display:flex;gap:14px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.step-item:last-child{border-bottom:none}
+.step-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--color-accent);min-width:24px;padding-top:2px;letter-spacing:0.05em}
+.step-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.step-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+
+/* ── Growth chart ── */
+.growth-chart{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:1.25rem 1.5rem;margin:.85rem 0}
+.growth-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.growth-row:last-child{margin-bottom:0}
+.growth-label{font-family:'DM Mono',monospace;font-style:italic;font-size:11px;color:var(--color-accent);min-width:82px;text-align:right}
+.growth-bar-wrap{flex:1;background:rgba(255,255,255,0.05);border-radius:3px;height:16px;overflow:hidden}
+.growth-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:6px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.7)}
+.gb1{width:2%;background:#3d7a52}
+.gb2{width:8%;background:#5a8a52}
+.gb3{width:14%;background:#c08b40}
+.gb4{width:28%;background:#c07040}
+.gb5{width:55%;background:#b84030}
+.gb6{width:88%;background:#8a2020}
+.gb7{width:100%;background:#601010}
+.growth-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);min-width:80px}
+
+/* ── Stack visual ── */
+.stack-visual{display:flex;flex-direction:column;gap:4px;margin:.85rem 0}
+.stack-frame{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:6px;padding:9px 14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--color-text-primary);display:flex;justify-content:space-between;align-items:center}
+.frame-fn{color:#79b8ff}
+.frame-info{font-size:10px;color:var(--color-text-secondary)}
+
+/* ── Compare grid ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:.85rem 0}
+.compare-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px 16px}
+.compare-card h4{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);font-family:'DM Mono',monospace;margin-bottom:6px}
+.compare-card p{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+
+/* ── Quiz ── */
+.quiz-wrap{display:flex;flex-direction:column;gap:6px;margin:.85rem 0}
+.q-opt{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:10px 14px;cursor:pointer;transition:background 0.12s,border-color 0.12s;font-size:13px;color:var(--color-text-primary);display:flex;align-items:center;gap:10px;font-family:'DM Mono',monospace}
+.q-opt:hover{background:var(--color-background-tertiary);border-color:var(--color-border-secondary)}
+.q-opt.correct{background:var(--color-green-dim);border-color:var(--color-green);color:#6ab88a}
+.q-opt.wrong{background:#2a1010;border-color:#5a2020;color:#c06060}
+.q-letter{font-size:10px;color:var(--color-text-secondary);min-width:16px}
+.quiz-feedback{font-size:12px;color:var(--color-text-secondary);font-style:italic;margin-top:6px;padding:.65rem 1rem;background:var(--color-background-secondary);border-radius:6px;display:none;line-height:1.6}
+.quiz-feedback strong{color:var(--color-text-primary)}
+
+/* ── Mistake list ── */
+.mistake-list{display:flex;flex-direction:column;gap:6px;margin:.85rem 0}
+.mistake-item{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:12px 14px}
+.mistake-tag{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#c06060;margin-bottom:4px}
+.mistake-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.mistake-fix{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.mistake-fix strong{color:#6ab88a}
+
+/* ── Links list ── */
+.links-list{display:flex;flex-direction:column;gap:5px;margin:.85rem 0}
+.plink{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;color:var(--color-text-primary);font-size:13px;transition:background 0.12s,border-color 0.12s}
+.plink:hover{background:var(--color-background-tertiary);border-color:var(--color-border-secondary)}
+.plink-n{font-family:'DM Mono',monospace;font-size:10px;color:var(--color-text-secondary);min-width:18px}
+
+/* ── Card footer ── */
+.card-footer{padding:1.25rem 2rem;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+.nav-btn{padding:8px 18px;border-radius:100px;border:0.5px solid var(--color-border-secondary);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.12s}
+.nav-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-next{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.nav-next:hover{opacity:0.85;color:#fff}
+
+@media(max-width:600px){
+  .card-body{padding:1.25rem 1rem}
+  .card-header{padding:1.25rem 1rem}
+  .card-footer{padding:1rem}
+  .compare-grid{grid-template-columns:1fr}
+}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Time and Space Complexity — The Complete Reference</h2>
+
+<div class="wrap">
+
+<div class="page-header">
+  <p class="eyebrow">Algorithms · Computer Science · Complexity Analysis</p>
+  <h1 class="page-title">Time & Space Complexity —<br><em>The Complete Reference</em></h1>
+  <p class="page-subtitle">Everything you need to truly understand algorithmic complexity — from first principles to real-world trade-offs. No hand-waving, no shortcuts.</p>
+  <div class="progress-row">
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+    <span class="progress-label" id="pLabel">0 / 9</span>
+  </div>
+</div>
+
+<div class="topic-nav" id="topicNav"></div>
+<div class="content-card" id="contentCard">
+  <div style="padding:3.5rem 2rem;text-align:center;color:var(--color-text-secondary);font-size:14px">Select a topic above to begin.</div>
+</div>
+
+</div>
+
+<script>
+const T=[
+
+{id:'why-it-matters',num:'01',name:'Why It Matters',sub:'The cost of ignoring complexity',content:`
+<div class="sec"><div class="sec-label">The core idea</div>
+<div class="prose"><p>Every algorithm makes an implicit promise about how it behaves as the data it handles grows. Will it handle ten items in the same time as ten million? Complexity analysis makes that promise explicit — before you write a single line of production code.</p></div>
+<div class="key-box"><strong>The key insight:</strong> Actual clock time is useless for measuring algorithmic efficiency — server specs, competing processes, and environmental noise all interfere. Instead, we count <strong>operations as a function of input size n</strong>. This abstracts away hardware so we can compare algorithms on their own merits.</div></div>
+
+<div class="sec"><div class="sec-label">A concrete illustration</div>
+<div class="prose"><p>Suppose an O(n²) algorithm takes 1 second at n=1,000. Watch what happens:</p></div>
+<table class="dtable"><thead><tr><th>Input size (n)</th><th>Operations</th><th>Time (estimated)</th></tr></thead><tbody>
+<tr><td>1,000</td><td>1,000,000</td><td>1 second</td></tr>
+<tr><td>10,000</td><td>100,000,000</td><td>100 seconds</td></tr>
+<tr><td>100,000</td><td>10,000,000,000</td><td>~3 hours</td></tr>
+<tr><td>1,000,000</td><td>1,000,000,000,000</td><td>~11 days</td></tr>
+</tbody></table>
+<div class="warn"><strong>The quadratic trap:</strong> 10× more data = 100× more time. It doesn't just get slower — it becomes catastrophically slower. This is why complexity analysis is an engineering survival skill, not an academic exercise.</div></div>
+
+<div class="sec"><div class="sec-label">Operations at n = 1,000 (relative scale)</div>
+<div class="growth-chart">
+  <div class="growth-row"><span class="growth-label">O(1)</span><div class="growth-bar-wrap"><div class="growth-bar gb1">1</div></div><span class="growth-val">1</span></div>
+  <div class="growth-row"><span class="growth-label">O(log n)</span><div class="growth-bar-wrap"><div class="growth-bar gb2">~10</div></div><span class="growth-val">~10</span></div>
+  <div class="growth-row"><span class="growth-label">O(n)</span><div class="growth-bar-wrap"><div class="growth-bar gb3">1,000</div></div><span class="growth-val">1,000</span></div>
+  <div class="growth-row"><span class="growth-label">O(n log n)</span><div class="growth-bar-wrap"><div class="growth-bar gb4">~10K</div></div><span class="growth-val">~10,000</span></div>
+  <div class="growth-row"><span class="growth-label">O(n²)</span><div class="growth-bar-wrap"><div class="growth-bar gb5">1M</div></div><span class="growth-val">1,000,000</span></div>
+  <div class="growth-row"><span class="growth-label">O(2ⁿ)</span><div class="growth-bar-wrap"><div class="growth-bar gb6">astronomical</div></div><span class="growth-val">10³⁰¹</span></div>
+  <div class="growth-row"><span class="growth-label">O(n!)</span><div class="growth-bar-wrap"><div class="growth-bar gb7">incomprehensible</div></div><span class="growth-val">10²⁵⁶⁸</span></div>
+</div></div>`},
+
+{id:'big-o-notation',num:'02',name:'Big O Notation',sub:'Formal definition, three notations, golden rules',content:`
+<div class="sec"><div class="sec-label">What Big O means</div>
+<div class="prose"><p>Big O is a mathematical notation that describes the <strong>upper bound</strong> of an algorithm's growth rate. It tells you the worst thing that can happen as input grows toward infinity. We strip away constants and lower-order terms because at large enough scale they become irrelevant.</p></div>
+<div class="key-box"><strong>Formal definition:</strong> f(n) = O(g(n)) if there exist constants c > 0 and n₀ such that for all n ≥ n₀: f(n) ≤ c · g(n). In plain English: after some point, g(n) scaled by some constant is always an upper bound on f(n).</div></div>
+
+<div class="sec"><div class="sec-label">The three notations</div>
+<table class="dtable"><thead><tr><th>Notation</th><th>Name</th><th>Meaning</th><th>Use case</th></tr></thead><tbody>
+<tr><td><span class="o">O(n)</span></td><td>Big O</td><td>Upper bound — at most this fast</td><td>Worst-case analysis (most used)</td></tr>
+<tr><td><span class="o">Ω(n)</span></td><td>Omega</td><td>Lower bound — at least this fast</td><td>Best-case analysis</td></tr>
+<tr><td><span class="o">Θ(n)</span></td><td>Theta</td><td>Tight bound — exactly this class</td><td>When upper + lower bounds match</td></tr>
+</tbody></table>
+<div class="note"><strong>In practice:</strong> Big O is almost always the one you want. It gives a guarantee about maximum cost, which is what matters for reliability in production systems.</div></div>
+
+<div class="sec"><div class="sec-label">The two golden rules</div>
+<div class="step-list">
+  <div class="step-item"><div class="step-num">R1</div><div><div class="step-title">Drop constants</div><div class="step-desc">O(3n) → O(n). O(500) → O(1). Constants don't affect growth shape. An O(3n) and O(n) algorithm both scale linearly — the constant only shifts where the line starts, not how steep it is.</div></div></div>
+  <div class="step-item"><div class="step-num">R2</div><div><div class="step-title">Drop lower-order terms</div><div class="step-desc">O(n² + n) → O(n²). O(n³ + n² + 50) → O(n³). At large n, the dominant term completely overwhelms the others. Adding n to n² when n=1,000,000 contributes 0.0001% to the total.</div></div></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">How to analyze multi-step algorithms</div>
+<div class="compare-grid">
+  <div class="compare-card"><h4>Sequential → ADD</h4><p>If your function does O(n) work then O(n²) work: O(n) + O(n²) = O(n²). The dominant term wins.</p></div>
+  <div class="compare-card"><h4>Nested → MULTIPLY</h4><p>If you do O(n) work inside an O(n) loop: O(n) × O(n) = O(n²). Nesting always multiplies.</p></div>
+</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">analysis_example.cpp</span><span class="code-badge">O(n²) overall</span></div>
+<pre><span class="cm">// Step 1: O(n log n) — sorting</span>
+<span class="fn">sort</span>(arr, arr + n);
+
+<span class="cm">// Step 2: O(n²) — nested loop</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="kw">for</span> (<span class="kw">int</span> j = i+<span class="num">1</span>; j &lt; n; j++)
+        <span class="fn">process</span>(arr[i], arr[j]);
+
+<span class="cm">// Total: O(n log n) + O(n²) = O(n²)  ← dominant term wins</span></pre></div></div>`},
+
+{id:'complexity-hierarchy',num:'03',name:'Complexity Hierarchy',sub:'O(1) through O(n!) — the full map',content:`
+<div class="sec"><div class="sec-label">Full hierarchy at a glance</div>
+<div class="concept-row">
+  <div class="cc"><h4>O(1) — Constant</h4><p>Array index, hash lookup. Doesn't matter if n is 5 or 5 million.</p><span class="badge b-green">Ideal</span></div>
+  <div class="cc"><h4>O(log n) — Logarithmic</h4><p>Binary search, balanced BST. Halves the problem each step.</p><span class="badge b-green">Excellent</span></div>
+  <div class="cc"><h4>O(n) — Linear</h4><p>Single loop, linear scan. Double n = double time.</p><span class="badge b-blue">Good</span></div>
+  <div class="cc"><h4>O(n log n) — Linearithmic</h4><p>Merge sort, heap sort. Optimal for comparison-based sorting.</p><span class="badge b-blue">Acceptable</span></div>
+  <div class="cc"><h4>O(n²) — Quadratic</h4><p>Nested loops, bubble sort. Manageable only for small n.</p><span class="badge b-amber">Caution</span></div>
+  <div class="cc"><h4>O(n³) — Cubic</h4><p>Triple nested loops. Problematic above n ~ 500.</p><span class="badge b-amber">Avoid</span></div>
+  <div class="cc"><h4>O(2ⁿ) — Exponential</h4><p>Recursive fib, subset enumeration. Becomes unrunnable fast.</p><span class="badge b-red">Danger</span></div>
+  <div class="cc"><h4>O(n!) — Factorial</h4><p>Brute-force permutations. Unusable beyond n ~ 12.</p><span class="badge b-red">Unusable</span></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Pattern recognition — spot the complexity instantly</div>
+<table class="dtable"><thead><tr><th>If you see…</th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Direct index or hash lookup</td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Loop where counter doubles/halves each step</td><td><span class="o">O(log n)</span></td></tr>
+<tr><td>Single loop over n</td><td><span class="o">O(n)</span></td></tr>
+<tr><td>Loop containing binary search or BST operation</td><td><span class="o">O(n log n)</span></td></tr>
+<tr><td>Two nested loops over n</td><td><span class="o">O(n²)</span></td></tr>
+<tr><td>Three nested loops over n</td><td><span class="o">O(n³)</span></td></tr>
+<tr><td>Recursion with 2 branches, no memoization</td><td><span class="o">O(2ⁿ)</span></td></tr>
+<tr><td>Generating all permutations of n items</td><td><span class="o">O(n!)</span></td></tr>
+</tbody></table></div>`},
+
+{id:'time-complexity',num:'04',name:'Time Complexity',sub:'Every class with annotated code examples',content:`
+<div class="sec"><div class="sec-label">O(1) — Constant time</div>
+<div class="prose"><p>No matter how large the input, a fixed number of steps. The holy grail.</p></div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">constant.cpp</span><span class="code-badge">O(1)</span></div>
+<pre><span class="kw">int</span> <span class="fn">getFirst</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> n) {
+    <span class="kw">return</span> arr[<span class="num">0</span>];   <span class="cm">// same cost if arr has 5 or 5 million elements</span>
+}
+<span class="kw">int</span> val = myMap[<span class="str">"key"</span>];  <span class="cm">// hash map lookup — direct address calculation</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">O(log n) — Logarithmic time</div>
+<div class="prose"><p>Each step cuts the problem in half. To find an element in a sorted array of 1 billion items, binary search needs just <strong>30 comparisons</strong>.</p></div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">binary_search.cpp</span><span class="code-badge">O(log n)</span></div>
+<pre><span class="kw">int</span> <span class="fn">binarySearch</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> n, <span class="kw">int</span> target) {
+    <span class="kw">int</span> lo = <span class="num">0</span>, hi = n - <span class="num">1</span>;
+    <span class="kw">while</span> (lo &lt;= hi) {
+        <span class="kw">int</span> mid = lo + (hi - lo) / <span class="num">2</span>;
+        <span class="kw">if</span> (arr[mid] == target) <span class="kw">return</span> mid;
+        <span class="kw">else if</span> (arr[mid] &lt; target) lo = mid + <span class="num">1</span>;  <span class="cm">// discard left half</span>
+        <span class="kw">else</span> hi = mid - <span class="num">1</span>;                         <span class="cm">// discard right half</span>
+    }
+    <span class="kw">return</span> -<span class="num">1</span>;
+}
+<span class="cm">// n=1,000,000 → only ~20 iterations needed</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">O(n) — Linear time</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">linear.cpp</span><span class="code-badge">O(n)</span></div>
+<pre><span class="kw">int</span> <span class="fn">findMax</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> n) {
+    <span class="kw">int</span> max = arr[<span class="num">0</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; n; i++) {
+        <span class="kw">if</span> (arr[i] &gt; max) max = arr[i];
+    }
+    <span class="kw">return</span> max;
+}
+<span class="cm">// Must check every element — no way around it</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">O(n log n) — Linearithmic time</div>
+<div class="prose"><p>The gold standard for sorting. Proven to be the <strong>theoretical minimum</strong> for comparison-based sorting.</p></div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">merge_sort.cpp</span><span class="code-badge">O(n log n)</span></div>
+<pre><span class="kw">void</span> <span class="fn">mergeSort</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> lo, <span class="kw">int</span> hi) {
+    <span class="kw">if</span> (lo &gt;= hi) <span class="kw">return</span>;
+    <span class="kw">int</span> mid = (lo + hi) / <span class="num">2</span>;
+    <span class="fn">mergeSort</span>(arr, lo, mid);     <span class="cm">// log n recursive levels</span>
+    <span class="fn">mergeSort</span>(arr, mid+<span class="num">1</span>, hi);
+    <span class="fn">merge</span>(arr, lo, mid, hi);     <span class="cm">// n work done per level</span>
+}
+<span class="cm">// log n levels × n work each = O(n log n)</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">O(n²) — Quadratic time</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">bubble_sort.cpp</span><span class="code-badge">O(n²)</span></div>
+<pre><span class="kw">void</span> <span class="fn">bubbleSort</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> n) {
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++) {          <span class="cm">// outer: n passes</span>
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; n-i-<span class="num">1</span>; j++) {   <span class="cm">// inner: ~n comparisons</span>
+            <span class="kw">if</span> (arr[j] &gt; arr[j+<span class="num">1</span>])
+                <span class="fn">swap</span>(arr[j], arr[j+<span class="num">1</span>]);
+        }
+    }
+}
+<span class="cm">// n=10,000 → 100,000,000 comparisons. Avoid for large data.</span></pre></div>
+<div class="warn"><strong>The nested loop alarm:</strong> Whenever you write a loop inside a loop over the same input, ask yourself: can a hash map eliminate the inner loop and bring this to O(n)?</div></div>
+
+<div class="sec"><div class="sec-label">O(2ⁿ) — Exponential time</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">fib_naive.cpp</span><span class="code-badge">O(2ⁿ)</span></div>
+<pre><span class="kw">int</span> <span class="fn">fib</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);  <span class="cm">// 2 branches → 2ⁿ calls</span>
+}
+<span class="cm">// fib(50) requires ~1,125,899,906,842,623 calls</span>
+<span class="cm">// Fix: memoization brings this to O(n) — see topic 07</span></pre></div></div>`},
+
+{id:'space-complexity',num:'05',name:'Space Complexity',sub:'Auxiliary space, input space, the call stack',content:`
+<div class="sec"><div class="sec-label">What space complexity measures</div>
+<div class="prose"><p>Space complexity measures total memory an algorithm needs relative to input size. It has two components: <strong>auxiliary space</strong> — memory the algorithm creates itself (variables, data structures, call stack) — and <strong>input space</strong> — memory occupied by the input. Most analysis focuses on auxiliary space, since the input is a given.</p></div></div>
+
+<div class="sec"><div class="sec-label">O(1) — In-place algorithms</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">in_place.cpp</span><span class="code-badge">O(1) space</span></div>
+<pre><span class="kw">void</span> <span class="fn">reverse</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> n) {
+    <span class="kw">int</span> lo = <span class="num">0</span>, hi = n - <span class="num">1</span>;
+    <span class="kw">while</span> (lo &lt; hi) {
+        <span class="fn">swap</span>(arr[lo++], arr[hi--]);  <span class="cm">// only 2 variables, always</span>
+    }
+}
+<span class="cm">// Memory: 2 integers (lo, hi) regardless of input size → O(1)</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">O(n) — Linear space</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">linear_space.cpp</span><span class="code-badge">O(n) space</span></div>
+<pre><span class="kw">int</span>* <span class="fn">copyArray</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> n) {
+    <span class="kw">int</span>* result = <span class="kw">new int</span>[n];   <span class="cm">// allocates n integers</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        result[i] = arr[i];
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Memory scales proportionally to n → O(n)</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">The call stack — hidden space cost</div>
+<div class="prose"><p>Every function call uses stack memory. Recursive algorithms can silently consume O(n) or more space via the call stack — even if they allocate no other data structures.</p></div>
+<div class="stack-visual">
+  <div class="stack-frame"><span class="frame-fn">factorial(5)</span><span class="frame-info">frame 5 — waiting for factorial(4)</span></div>
+  <div class="stack-frame"><span class="frame-fn">factorial(4)</span><span class="frame-info">frame 4 — waiting for factorial(3)</span></div>
+  <div class="stack-frame"><span class="frame-fn">factorial(3)</span><span class="frame-info">frame 3 — waiting for factorial(2)</span></div>
+  <div class="stack-frame"><span class="frame-fn">factorial(2)</span><span class="frame-info">frame 2 — waiting for factorial(1)</span></div>
+  <div class="stack-frame"><span class="frame-fn">factorial(1)</span><span class="frame-info">frame 1 ← base case, returns 1</span></div>
+</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">factorial.cpp</span><span class="code-badge">O(n) time · O(n) space</span></div>
+<pre><span class="kw">int</span> <span class="fn">factorial</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> <span class="num">1</span>;
+    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="num">1</span>);
+}
+<span class="cm">// Space: O(n) — n stack frames held simultaneously</span>
+<span class="cm">// Deep recursion (n > ~10,000) risks stack overflow</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">O(n²) — Matrix / 2D grid storage</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">matrix.cpp</span><span class="code-badge">O(n²) space</span></div>
+<pre><span class="kw">int</span> graph[<span class="num">1000</span>][<span class="num">1000</span>];
+<span class="cm">// Stores n×n values → O(n²) space</span>
+<span class="cm">// n=1,000  → ~4 MB   (ok)</span>
+<span class="cm">// n=10,000 → ~400 MB (problematic)</span>
+<span class="cm">// Sparse graph alternative: adjacency list → O(n + edges)</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">Space complexity quick reference</div>
+<table class="dtable"><thead><tr><th>If you see…</th><th>Space used</th></tr></thead><tbody>
+<tr><td>Only a few variables, no allocation</td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Recursion depth scales with n</td><td><span class="o">O(n)</span> call stack</td></tr>
+<tr><td>Creating an array/list of size n</td><td><span class="o">O(n)</span></td></tr>
+<tr><td>Hash map storing n keys</td><td><span class="o">O(n)</span></td></tr>
+<tr><td>2D array / grid of size n×n</td><td><span class="o">O(n²)</span></td></tr>
+</tbody></table></div>`},
+
+{id:'tradeoffs',num:'06',name:'Time vs Space Trade-offs',sub:'Memoization, caching, rolling windows',content:`
+<div class="sec"><div class="sec-label">The core tension</div>
+<div class="prose"><p>Time and space complexity are often in tension. Using more memory can buy you speed, and vice versa. Understanding when to make each trade is a core engineering skill.</p></div>
+<div class="compare-grid">
+  <div class="compare-card"><h4>Buy speed with memory</h4><p>Hash maps, caches, precomputed lookup tables. Best when memory is plentiful and speed is critical — web servers, real-time systems.</p></div>
+  <div class="compare-card"><h4>Save memory, recompute</h4><p>Streaming algorithms, rolling windows. Best when memory is scarce — embedded systems, mobile, very large datasets.</p></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Classic example — memoization</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">memoization.cpp</span><span class="code-badge">trade O(2ⁿ) time for O(n) space</span></div>
+<pre><span class="cm">// Without memo: O(2ⁿ) time, O(n) space (call stack only)</span>
+<span class="kw">int</span> <span class="fn">fib</span>(<span class="kw">int</span> n) { <span class="kw">return</span> n &lt;= <span class="num">1</span> ? n : <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>); }
+
+<span class="cm">// With memo: O(n) time, O(n) space — pay memory to save time</span>
+unordered_map&lt;<span class="kw">int</span>,<span class="kw">int</span>&gt; memo;
+<span class="kw">int</span> <span class="fn">fibMemo</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">if</span> (memo.count(n)) <span class="kw">return</span> memo[n];  <span class="cm">// O(1) cache hit</span>
+    <span class="kw">return</span> memo[n] = <span class="fn">fibMemo</span>(n-<span class="num">1</span>) + <span class="fn">fibMemo</span>(n-<span class="num">2</span>);
+}</pre></div></div>
+
+<div class="sec"><div class="sec-label">Rolling window — space optimization</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">fib_optimal.cpp</span><span class="code-badge">O(n) time · O(1) space</span></div>
+<pre><span class="cm">// Bottom-up DP: only ever need last 2 values</span>
+<span class="kw">int</span> <span class="fn">fibOptimal</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">int</span> prev2 = <span class="num">0</span>, prev1 = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">2</span>; i &lt;= n; i++) {
+        <span class="kw">int</span> curr = prev1 + prev2;
+        prev2 = prev1;
+        prev1 = curr;
+    }
+    <span class="kw">return</span> prev1;
+}
+<span class="cm">// Best of both worlds: O(n) time, O(1) space</span></pre></div></div>
+
+<div class="sec"><div class="sec-label">The hash map pattern — most powerful trade-off</div>
+<div class="tip"><strong>The "Can I use a hash map?" test:</strong> Whenever you see a nested loop searching for something inside a loop, ask: can I preload these values into a hash map and reduce O(n²) to O(n)? This single pattern is behind countless 10–100× performance improvements in production systems.</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">two_sum.cpp</span><span class="code-badge">O(n²) → O(n) with hash map</span></div>
+<pre><span class="cm">// Naive: O(n²) time, O(1) space</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="kw">for</span> (<span class="kw">int</span> j = i+<span class="num">1</span>; j &lt; n; j++)
+        <span class="kw">if</span> (arr[i] + arr[j] == target) <span class="kw">return</span> {i, j};
+
+<span class="cm">// Optimized: O(n) time, O(n) space</span>
+unordered_map&lt;<span class="kw">int</span>,<span class="kw">int</span>&gt; seen;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++) {
+    <span class="kw">int</span> need = target - arr[i];
+    <span class="kw">if</span> (seen.count(need)) <span class="kw">return</span> {seen[need], i};
+    seen[arr[i]] = i;
+}</pre></div></div>`},
+
+{id:'real-world',num:'07',name:'Real-World Patterns',sub:'Databases, data structures, production systems',content:`
+<div class="sec"><div class="sec-label">Database query complexity</div>
+<div class="prose"><p>This is why adding an index can make a query go from minutes to milliseconds — you're converting O(n) to O(log n). The cost is slightly slower writes and more disk space.</p></div>
+<table class="dtable"><thead><tr><th>Operation</th><th>Without index</th><th>With B-tree index</th></tr></thead><tbody>
+<tr><td>SELECT by exact value</td><td><span class="o">O(n)</span> full table scan</td><td><span class="o">O(log n)</span></td></tr>
+<tr><td>SELECT by range</td><td><span class="o">O(n)</span></td><td><span class="o">O(log n + k)</span> k=results</td></tr>
+<tr><td>INSERT</td><td><span class="o">O(1)</span></td><td><span class="o">O(log n)</span> maintain index</td></tr>
+<tr><td>JOIN two tables (naive)</td><td><span class="o">O(n·m)</span> nested loop</td><td><span class="o">O(n log m)</span> hash join</td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">Data structure operation costs</div>
+<table class="dtable"><thead><tr><th>Structure</th><th>Access</th><th>Search</th><th>Insert</th><th>Delete</th></tr></thead><tbody>
+<tr><td>Array</td><td><span class="o">O(1)</span></td><td><span class="o">O(n)</span></td><td><span class="o">O(n)</span></td><td><span class="o">O(n)</span></td></tr>
+<tr><td>Linked List</td><td><span class="o">O(n)</span></td><td><span class="o">O(n)</span></td><td><span class="o">O(1)</span></td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Hash Map</td><td><span class="o">O(1)</span></td><td><span class="o">O(1)</span></td><td><span class="o">O(1)</span></td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Binary Search Tree</td><td><span class="o">O(log n)</span></td><td><span class="o">O(log n)</span></td><td><span class="o">O(log n)</span></td><td><span class="o">O(log n)</span></td></tr>
+<tr><td>Heap</td><td><span class="o">O(1)</span> peek</td><td><span class="o">O(n)</span></td><td><span class="o">O(log n)</span></td><td><span class="o">O(log n)</span></td></tr>
+<tr><td>Stack / Queue</td><td><span class="o">O(n)</span></td><td><span class="o">O(n)</span></td><td><span class="o">O(1)</span></td><td><span class="o">O(1)</span></td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">Sorting algorithm comparison</div>
+<table class="dtable"><thead><tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th></tr></thead><tbody>
+<tr><td>Bubble Sort</td><td><span class="o">O(n)</span></td><td><span class="o">O(n²)</span></td><td><span class="o">O(n²)</span></td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Insertion Sort</td><td><span class="o">O(n)</span></td><td><span class="o">O(n²)</span></td><td><span class="o">O(n²)</span></td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Merge Sort</td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n)</span></td></tr>
+<tr><td>Quick Sort</td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n²)</span></td><td><span class="o">O(log n)</span></td></tr>
+<tr><td>Heap Sort</td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n log n)</span></td><td><span class="o">O(n log n)</span></td><td><span class="o">O(1)</span></td></tr>
+</tbody></table></div>`},
+
+{id:'practice',num:'08',name:'Practice Quiz',sub:'Test your understanding with 4 questions',content:`
+<div class="sec"><div class="sec-label">Question 1 — analyze this code</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">q1.cpp</span></div>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="kw">for</span> (<span class="kw">int</span> j = i; j &lt; n; j++)
+        <span class="fn">doWork</span>();</pre></div>
+<div class="quiz-wrap" id="q1">
+  <div class="q-opt" onclick="answer('q1',this,'wrong')"><span class="q-letter">A</span>O(n)</div>
+  <div class="q-opt" onclick="answer('q1',this,'correct')"><span class="q-letter">B</span>O(n²)</div>
+  <div class="q-opt" onclick="answer('q1',this,'wrong')"><span class="q-letter">C</span>O(log n)</div>
+  <div class="q-opt" onclick="answer('q1',this,'wrong')"><span class="q-letter">D</span>O(n log n)</div>
+  <div class="quiz-feedback"><strong>Answer: O(n²).</strong> Even though the inner loop starts at i (not 0), it still runs n + (n-1) + … + 1 = n(n+1)/2 times total. Drop constants and lower terms: O(n²).</div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Question 2 — space complexity of merge sort</div>
+<div class="quiz-wrap" id="q2">
+  <div class="q-opt" onclick="answer('q2',this,'wrong')"><span class="q-letter">A</span>O(1)</div>
+  <div class="q-opt" onclick="answer('q2',this,'correct')"><span class="q-letter">B</span>O(n)</div>
+  <div class="q-opt" onclick="answer('q2',this,'wrong')"><span class="q-letter">C</span>O(log n)</div>
+  <div class="q-opt" onclick="answer('q2',this,'wrong')"><span class="q-letter">D</span>O(n²)</div>
+  <div class="quiz-feedback"><strong>Answer: O(n).</strong> Merge sort requires O(n) auxiliary space for temporary arrays used during merging. The call stack adds O(log n) for recursion depth, but O(n) dominates.</div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Question 3 — O(1) lookup for millions of queries</div>
+<div class="prose"><p style="font-size:13px;color:var(--color-text-secondary)">You need to check if a number exists in a collection — and you'll query it millions of times. Which data structure gives O(1) average lookups?</p></div>
+<div class="quiz-wrap" id="q3">
+  <div class="q-opt" onclick="answer('q3',this,'wrong')"><span class="q-letter">A</span>Sorted array (binary search)</div>
+  <div class="q-opt" onclick="answer('q3',this,'correct')"><span class="q-letter">B</span>Hash set</div>
+  <div class="q-opt" onclick="answer('q3',this,'wrong')"><span class="q-letter">C</span>Linked list</div>
+  <div class="q-opt" onclick="answer('q3',this,'wrong')"><span class="q-letter">D</span>Binary search tree</div>
+  <div class="quiz-feedback"><strong>Answer: Hash set.</strong> Hash sets use hashing for O(1) average-case lookup. Arrays need binary search O(log n), linked lists need linear scan O(n), BSTs give O(log n).</div>
+</div></div>
+
+<div class="sec"><div class="sec-label">Question 4 — what is the overall complexity?</div>
+<div class="code-block"><div class="code-top"><div class="code-dots"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div><span class="code-lang">q4.cpp</span></div>
+<pre><span class="fn">sort</span>(arr, arr + n);              <span class="cm">// step 1</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++) {  <span class="cm">// step 2</span>
+    <span class="fn">binarySearch</span>(arr, n, i);
+}</pre></div>
+<div class="quiz-wrap" id="q4">
+  <div class="q-opt" onclick="answer('q4',this,'wrong')"><span class="q-letter">A</span>O(n)</div>
+  <div class="q-opt" onclick="answer('q4',this,'wrong')"><span class="q-letter">B</span>O(n²)</div>
+  <div class="q-opt" onclick="answer('q4',this,'correct')"><span class="q-letter">C</span>O(n log n)</div>
+  <div class="q-opt" onclick="answer('q4',this,'wrong')"><span class="q-letter">D</span>O(log n)</div>
+  <div class="quiz-feedback"><strong>Answer: O(n log n).</strong> Step 1 is O(n log n). Step 2 is a loop of n iterations each doing O(log n) binary search = O(n log n). Sequential steps: O(n log n) + O(n log n) = O(n log n).</div>
+</div></div>`},
+
+{id:'cheatsheet',num:'09',name:'Cheatsheet',sub:'Quick-reference tables and the 5 key questions',content:`
+<div class="sec"><div class="sec-label">Complexity triggers — spot it instantly</div>
+<table class="dtable"><thead><tr><th>Pattern</th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Direct index / hash lookup</td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Loop: counter doubles or halves each step</td><td><span class="o">O(log n)</span></td></tr>
+<tr><td>Single loop over n elements</td><td><span class="o">O(n)</span></td></tr>
+<tr><td>Divide input, do linear work at each level</td><td><span class="o">O(n log n)</span></td></tr>
+<tr><td>Two nested loops over n</td><td><span class="o">O(n²)</span></td></tr>
+<tr><td>Three nested loops over n</td><td><span class="o">O(n³)</span></td></tr>
+<tr><td>Recursion with 2+ branches, no memoization</td><td><span class="o">O(2ⁿ)</span></td></tr>
+<tr><td>Generating all permutations</td><td><span class="o">O(n!)</span></td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">Space triggers</div>
+<table class="dtable"><thead><tr><th>Pattern</th><th>Space</th></tr></thead><tbody>
+<tr><td>Only a few variables, no allocation</td><td><span class="o">O(1)</span></td></tr>
+<tr><td>Recursion depth scales with n</td><td><span class="o">O(n)</span> call stack</td></tr>
+<tr><td>Creating an array / list of n items</td><td><span class="o">O(n)</span></td></tr>
+<tr><td>Hash map storing n entries</td><td><span class="o">O(n)</span></td></tr>
+<tr><td>2D grid of n × n</td><td><span class="o">O(n²)</span></td></tr>
+</tbody></table></div>
+
+<div class="sec"><div class="sec-label">Simplification rules</div>
+<div class="step-list">
+  <div class="step-item"><div class="step-num">01</div><div><div class="step-title">Drop constants</div><div class="step-desc">O(5n) = O(n). O(100) = O(1). Focus on growth shape, not multipliers.</div></div></div>
+  <div class="step-item"><div class="step-num">02</div><div><div class="step-title">Drop lower-order terms</div><div class="step-desc">O(n² + n + 1) = O(n²). The dominant term overwhelms all others at scale.</div></div></div>
+  <div class="step-item"><div class="step-num">03</div><div><div class="step-title">Worst case wins</div><div class="step-desc">Always use the worst-case scenario. It's your reliability guarantee.</div></div></div>
+  <div class="step-item"><div class="step-num">04</div><div><div class="step-title">Sequential = add, nested = multiply</div><div class="step-desc">Steps in sequence: take the max. Steps nested inside each other: multiply.</div></div></div>
+</div></div>
+
+<div class="sec"><div class="sec-label">The 5 questions to ask any algorithm</div>
+<div class="step-list">
+  <div class="step-item"><div class="step-num">Q1</div><div><div class="step-title">What is n?</div><div class="step-desc">Be explicit about what the input size variable represents.</div></div></div>
+  <div class="step-item"><div class="step-num">Q2</div><div><div class="step-title">How does time scale with n?</div><div class="step-desc">Count dominant operations. Identify the bottleneck loop or recursion.</div></div></div>
+  <div class="step-item"><div class="step-num">Q3</div><div><div class="step-title">How does memory scale with n?</div><div class="step-desc">Count allocated structures, including the call stack for recursive code.</div></div></div>
+  <div class="step-item"><div class="step-num">Q4</div><div><div class="step-title">What is the worst case?</div><div class="step-desc">That's your Big O. It's what you guarantee to every caller of your function.</div></div></div>
+  <div class="step-item"><div class="step-num">Q5</div><div><div class="step-title">Can I do better?</div><div class="step-desc">Is there a smarter data structure or algorithm? A hash map? A sort? Dynamic programming?</div></div></div>
+</div></div>
+
+<div class="key-box"><strong>The one-sentence summary:</strong> Complexity analysis is about asking one question before shipping — does this still work when the data is 1,000× larger? Engineers who ask that question early build systems that last.</div>`}
+
+];
+
+let done=new Set(),cur=null;
+
+function renderNav(){
+  document.getElementById('topicNav').innerHTML=T.map(t=>`
+    <button class="t-btn${cur?.id===t.id?' active':''}${done.has(t.id)?' done':''}" onclick="show('${t.id}')">
+      <span class="t-num">${t.num}${done.has(t.id)?' ✓':''}</span>
+      <span class="t-name">${t.name}</span>
+    </button>`).join('');
+}
+
+function upd(){
+  const pct=Math.round(done.size/T.length*100);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pLabel').textContent=done.size+' / '+T.length;
+}
+
+function show(id){
+  const t=T.find(x=>x.id===id);if(!t)return;cur=t;
+  const idx=T.indexOf(t),prev=T[idx-1],next=T[idx+1];
+  document.getElementById('contentCard').innerHTML=`
+    <div class="card-header">
+      <div>
+        <span class="card-topic-num">${t.num} of ${T.length}</span>
+        <div class="card-title">${t.name}</div>
+        <div class="card-subtitle">${t.sub}</div>
+      </div>
+      <button class="mark-btn${done.has(id)?' done':''}" onclick="tog('${id}')">
+        ${done.has(id)?'Completed':'Mark complete'}
+      </button>
+    </div>
+    <div class="card-body">${t.content}</div>
+    <div class="card-footer">
+      ${prev?`<button class="nav-btn" onclick="show('${prev.id}')">← ${prev.name}</button>`:'<span></span>'}
+      ${next?`<button class="nav-btn nav-next" onclick="show('${next.id}')">${next.name} →</button>`:'<span></span>'}
+    </div>`;
+  renderNav();
+}
+
+function tog(id){done.has(id)?done.delete(id):done.add(id);upd();show(id);}
+
+function answer(qid, el, result){
+  const wrap=document.getElementById(qid);
+  if(wrap.querySelector('.correct,.wrong')) return;
+  el.classList.add(result);
+  const fb=wrap.querySelector('.quiz-feedback');
+  if(fb) fb.style.display='block';
+  if(result==='wrong'){
+    wrap.querySelectorAll('.q-opt').forEach(o=>{
+      if(o.getAttribute('onclick').includes("'correct'")) o.classList.add('correct');
+    });
+  }
+}
+
+renderNav();upd();show('why-it-matters');
+</script>
