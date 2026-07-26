@@ -18,6 +18,7 @@ interface ResumeCardProps {
   badges?: readonly string[];
   period: string;
   description?: string;
+  showArrow?: boolean;
 }
 export const ResumeCard = ({
   logoUrl,
@@ -28,6 +29,7 @@ export const ResumeCard = ({
   badges,
   period,
   description,
+  showArrow = true,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -73,12 +75,14 @@ export const ResumeCard = ({
                     ))}
                   </span>
                 )}
-                <ChevronRightIcon
-                  className={cn(
-                    "size-4 translate-x-0 transform opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100",
-                    isExpanded ? "rotate-90" : "rotate-0"
-                  )}
-                />
+                {showArrow && (
+                  <ChevronRightIcon
+                    className={cn(
+                      "size-4 translate-x-0 transform opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100",
+                      isExpanded ? "rotate-90" : "rotate-0"
+                    )}
+                  />
+                )}
               </h3>
               <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right">
                 {period}

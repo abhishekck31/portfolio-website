@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { HomeIcon, NotebookIcon } from "lucide-react";
+import { HomeIcon } from "lucide-react";
 
 export const DATA = {
   name: "Abhishek",
@@ -35,7 +35,6 @@ export const DATA = {
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
-    { href: "/blogs", icon: NotebookIcon, label: "Blogs" },
   ],
   contact: {
     email: "abhishek.ck3110@gmail.com",
@@ -79,13 +78,13 @@ export const DATA = {
       company: "Taranova Solutions Private Limited",
       badges: [],
       href: "#",
-      location: "Hybrid",
+      location: "On-site",
       title: "Software Engineering Intern",
       logoUrl: "/taranova.png",
       start: "April 2026",
-      end: "Present",
+      end: "May 2026",
       description:
-        "Currently building backend services for ApnaCA, a GST compliance SaaS platform — including API development, job scheduling, and core business logic for GSTIN and filing workflows.\nDesigning and implementing background jobs and async task pipelines to handle GST data processing, automation triggers, and compliance operations at scale.",
+        "• Autonomous LLM Workflows & Integration: Engineered an autonomous, multi-agent LLM workflow using FastAPI, Django, and NLP feature engineering for scanned PDF invoice classification and metadata tagging, automating structured JSON synchronization to Tally with 100% GSTN schema compliance.\n• Model Fine-Tuning & Performance Optimization: Self-hosted and fine-tuned Gemma 3 (27B) on an on-prem NVIDIA DGX Spark, cutting per-invoice data validation latency from 9s to 2s while eliminating paid API dependencies and establishing robust backend ingestion pipelines.",
     },
     {
       company: "Refurbo",
@@ -97,29 +96,45 @@ export const DATA = {
       start: "January 2026",
       end: "March 2026",
       description:
-        "• Working on real-world frontend features and bug fixes in a product-based environment.\n• Debugged complex UI rendering issues, including incorrect image mapping after sorting and filtering operations. \n• Collaborated using Git & GitHub, handling pull requests, code updates, and clean commit practices.\n• Focused on performance, clean UI, and maintainable code rather than quick fixes",
+        "• Modular UI Component Architecture: Developed a responsive React, TypeScript, and Tailwind CSS component library across 10+ production screens, implementing high-performance image features that directly reduced checkout drop-off rates.\n• State Management & Code Reliability: Hardened application state management and error boundaries to eliminate rendering failures, maintaining a zero-defect pull request (PR) record across cross-device deployments using Git.",
     },
     {
       company: "Unacademy",
       href: "https://unacademy.com/",
       badges: [],
-      location: "Onsite",
+      location: "On-site",
       title: "Operations Analyst Intern",
       logoUrl: "/Unacademy.png",
       start: "June 2025",
-      end: "July 2025",
+      end: "August 2025",
       description:
-        "• Engineered a Flask API & Google Apps Script system to fully automate student performance reporting, saving 95%+ in manual work.\n•  Built a custom internal tool with Retool to manage and streamline the entire YouTube content publishing pipeline, improving team efficiency.\n• Automated competitor analysis using Python (Web Scraping) and conducted data analysis on 500+ videos to optimize content strategy.",
+        "• Process Automation & REST APIs: Architected a Flask REST API synchronized with Google Apps Script to automate internal reporting workflows, achieving a 95%+ reduction in manual operational processing time alongside Figma UI/UX prototyping.\n• Data Extraction & Competitive Intelligence: Built a scalable Python data extraction and scraping pipeline to collect and analyze metadata from 500+ competitor streams, delivering critical market distribution insights for marketing campaigns.",
     },
   ],
   education: [
     {
       school: "CMR University",
       href: "",
-      degree: "Bachelor of Technology in Information Technology",
+      degree: "Bachelor of Technology in Information Technology — GPA: 7.9 / 10.0",
       logoUrl: "/cmru.png",
-      start: "2023",
-      end: "2027",
+      start: "July 2023",
+      end: "May 2027",
+    },
+    {
+      school: "REVA Independent PU College",
+      href: "",
+      degree: "12th Grade (PCMC) — Percentage: 90.02%",
+      logoUrl: "/reva_pu_logo.png",
+      start: "June 2021",
+      end: "March 2023",
+    },
+    {
+      school: "Sri Lakshmi Public School",
+      href: "",
+      degree: "10th Grade (CBSE) — Percentage: 80.5%",
+      logoUrl: "/slps_logo.png",
+      start: "June 2020",
+      end: "May 2021",
     },
   ],
   projects: [
@@ -151,31 +166,28 @@ export const DATA = {
       video: "",
     },
     {
-      title: "Roomit",
-      href: "https://github.com/abhishekck31/roomit",
+      title: "nextlimiter",
+      href: "https://github.com/abhishekck31/nextlimiter",
       //dates: "2024",
       active: true,
       description:
-        "Roomit is an AI-powered SaaS application that transforms 2D interior floor plans into photorealistic 3D architectural renders. Built with React and powered by Puter.js for authentication, serverless workers, cloud storage, and AI model integration (Claude & Gemini), the platform enables instant visualization, persistent hosting, and secure project management.",
+        "nextlimiter is a rate-limiting middleware for Next.js applications. It provides a simple and efficient way to implement rate limiting to protect your API routes from abuse. Published on npm with 25+ weekly downloads.",
       technologies: [
-        "React",
         "TypeScript",
-        "Vite",
-        "TailwindCSS",
-        "Puter.js",
-        "Claude",
-        "Gemini",
-        "Vercel",
+        "NextJS",
+        "Node.js",
+        "npm",
+        "GitHub",
       ],
       links: [
         {
-          type: "Website",
-          href: "https://roomithost.vercel.app/",
+          type: "NPM",
+          href: "https://www.npmjs.com/package/nextlimiter",
           icon: <Icons.globe className="size-3" />,
         },
         {
           type: "Source",
-          href: "https://github.com/abhishekck31/roomit",
+          href: "https://github.com/abhishekck31/nextlimiter",
           icon: <Icons.github className="size-3" />,
         },
       ],
@@ -211,32 +223,6 @@ export const DATA = {
         "Won 1st Place and a cash prize of ₹10,000 in the Coding Contest at Silver Spectrum Techfest-2025!It was a fantastic challenge that tested our problem-solving skills. A huge thank you to New Horizon College of Engineering for the opportunity!",
       win: "1st Place Winner",
       links: [],
-    },
-  ],
-  blogs: [
-    {
-      title: "Programming from the ground up — Foundations",
-      href: "/resources/programming-fundamentals.html",
-      dates: "May 2026",
-      description: "Computers, hardware, programs, bugs, flowcharts, and logical thinking — everything before the first line of code.",
-      image: "",
-      tags: ["Programming", "Fundamentals", "Logic"],
-    },
-    {
-      title: "Things to know before starting with DSA in Java",
-      href: "/resources/dsa-introduction.html",
-      dates: "May 2026",
-      description: "A complete reference covering fundamentals, complexity, collections, strings, hashing, and recursion.",
-      image: "",
-      tags: ["Java", "DSA", "Interview Prep"],
-    },
-    {
-      title: "Time & Space Complexity — The Complete Reference",
-      href: "/resources/complexity-blog-post.html",
-      dates: "May 2026",
-      description: "Everything you need to truly understand algorithmic complexity — from first principles to real-world trade-offs. No hand-waving, no shortcuts.",
-      image: "",
-      tags: ["Algorithms", "Computer Science", "Complexity Analysis"],
     },
   ],
 } as const;
