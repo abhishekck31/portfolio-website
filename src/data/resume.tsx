@@ -8,9 +8,9 @@ export const DATA = {
   location: "India",
   locationLink: "https://www.google.com/maps/place/india",
   description:
-    "B.Tech student and aspiring Software Engineer focused on Data Structures & Algorithms and full-stack development. I build modern, scalable web applications using JavaScript, React, Next.js, and backend tools, with a strong focus on clean UI and performance.",
+    "Software Engineer focused on full-stack development. I build modern, scalable web applications using JavaScript, React, Next.js, and backend tools, with a strong focus on clean UI and high performance.",
   summary:
-    "Aspiring Software Engineer currently in 6th semester. Actively solving DSA problems daily and building real-world projects like SaaS platforms and business websites. Passionate about full-stack development, system design fundamentals, and building impactful tech products.",
+    "Software Engineer with a proven track record of architecting and deploying scalable, real-world applications. Experienced in full-stack development, system design, and building robust SaaS platforms and business-critical solutions. Passionate about writing clean code and delivering high-impact technology products that drive business value.",
   avatarUrl: "/me.png",
   skills: [
     "Java",

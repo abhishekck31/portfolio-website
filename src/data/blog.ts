@@ -23,7 +23,7 @@ export async function markdownToHTML(markdown: string) {
   const p = await unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypePrettyCode, {
       // https://rehype-pretty.pages.dev/#usage
       theme: {
@@ -32,7 +32,7 @@ export async function markdownToHTML(markdown: string) {
       },
       keepBackground: false,
     })
-    .use(rehypeStringify)
+    .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
 
   return p.toString();

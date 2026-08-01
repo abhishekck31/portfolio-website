@@ -1,0 +1,45 @@
+---
+title: "Basic Concepts Questions to Solve"
+publishedAt: "2026-05-28"
+summary: "A curated list of basic programming concept questions and their Java solutions to test your fundamental skills."
+---
+
+# Basic Concepts Questions to Solve
+
+Welcome to this practice set designed to solidify your understanding of programming fundamentals. Below, we'll solve these questions using Java.
+
+## 1. Basic Maths
+
+### Question 1: Count all Digits of a Number
+*Given an integer N, write a program to count the number of digits in N.*
+
+<details className="mt-4 border rounded-lg p-4 bg-muted/30">
+<summary className="cursor-pointer font-semibold select-none">View Java Solution</summary>
+
+```java
+public class Solution {
+    public static int countDigits(int n) {
+        // Handle the case where the number is 0
+        if (n == 0) {
+            return 1;
+        }
+        
+        // Handle negative numbers
+        n = Math.abs(n);
+        
+        int count = 0;
+        while (n > 0) {
+            count++;
+            n = n / 10;
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int number = 12345;
+        System.out.println("Number of digits in " + number + " is: " + countDigits(number));
+    }
+}
+```
+
+</details>
