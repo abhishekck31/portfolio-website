@@ -87,27 +87,73 @@ export default function Page() {
                 text="Building intelligent systems that think, scale, and perform."
               />
               <BlurFade delay={BLUR_FADE_DELAY * 2.5}>
-                <Link
-                  href="mailto:abhishek.ck3110@gmail.com"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:underline transition-all mt-2"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-4"
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-xs sm:text-sm text-muted-foreground">
+                  <Link
+                    href={`mailto:${DATA.contact.email}`}
+                    className="inline-flex items-center gap-1.5 font-medium text-foreground hover:underline transition-all"
                   >
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                  abhishek.ck3110@gmail.com
-                </Link>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-3.5"
+                    >
+                      <rect width="20" height="16" x="2" y="4" rx="2" />
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    {DATA.contact.email}
+                  </Link>
+
+                  <Link
+                    href={`tel:${DATA.contact.tel}`}
+                    className="inline-flex items-center gap-1.5 font-medium text-foreground hover:underline transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-3.5"
+                    >
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    +91 {DATA.contact.tel}
+                  </Link>
+
+                  <Link
+                    href={DATA.locationLink}
+                    target="_blank"
+                    className="inline-flex items-center gap-1.5 font-medium text-muted-foreground hover:text-foreground transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-3.5"
+                    >
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    {DATA.location}
+                  </Link>
+                </div>
                 <DownloadResumeButton />
               </BlurFade>
             </div>
@@ -156,14 +202,28 @@ export default function Page() {
         </div>
       </section>
       <section id="skills">
-        <div className="flex min-h-0 flex-col gap-y-3">
+        <div className="flex min-h-0 flex-col gap-y-4">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
-            <h2 className="text-xl font-bold">Skills</h2>
+            <h2 className="text-xl font-bold">Technical Skills</h2>
           </BlurFade>
-          <div className="flex flex-wrap gap-1">
-            {DATA.skills.map((skill, id) => (
-              <BlurFade key={skill} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <Badge key={skill}>{skill}</Badge>
+          <div className="space-y-3">
+            {Object.entries(DATA.skillsByCategory).map(([category, skills], catId) => (
+              <BlurFade key={category} delay={BLUR_FADE_DELAY * 10 + catId * 0.04}>
+                <div className="space-y-1.5">
+                  <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    {category}
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skills.map((skill) => (
+                      <Badge
+                        key={skill}
+                        className="px-2.5 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
               </BlurFade>
             ))}
           </div>
@@ -181,8 +241,7 @@ export default function Page() {
                   Check out my latest work
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-md/relaxed">
-                  I&apos;ve developed production-ready web platforms, AI-powered applications, and automation systems delivering
-                  responsive user experiences, scalable backend systems, and measurable efficiency improvements.
+                  I&apos;ve engineered production-ready libraries on npm, full-stack platforms with automated fulfillment, and AI-powered data pipelines.
                 </p>
               </div>
             </div>
@@ -214,14 +273,13 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
-                  Hackathons
+                  Achievements
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  I like building things
+                  Proven Competition Track Record
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  I build reliable and scalable software.
-                  Driven by problem-solving and strong engineering principles.
+                  Secured 1st place in multiple state and national technical hackathons and competitive coding contests.
                 </p>
               </div>
             </div>

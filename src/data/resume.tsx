@@ -2,43 +2,77 @@ import { Icons } from "@/components/icons";
 import { HomeIcon } from "lucide-react";
 
 export const DATA = {
-  name: "Abhishek",
-  initials: "SS",
+  name: "Abhishek C K",
+  initials: "ACK",
   url: "https://github.com/abhishekck31",
-  location: "India",
-  locationLink: "https://www.google.com/maps/place/india",
+  location: "Bangalore, Karnataka, India",
+  locationLink: "https://www.google.com/maps/place/Bengaluru,+Karnataka",
   description:
-    "Software Engineer focused on full-stack development. I build modern, scalable web applications using JavaScript, React, Next.js, and backend tools, with a strong focus on clean UI and high performance.",
+    "Software Engineer specializing in AI/ML systems, multi-stage LLM pipelines, and high-performance full-stack web applications.",
   summary:
-    "Software Engineer with a proven track record of architecting and deploying scalable, real-world applications. Experienced in full-stack development, system design, and building robust SaaS platforms and business-critical solutions. Passionate about writing clean code and delivering high-impact technology products that drive business value.",
-  avatarUrl: "/me.png",
+    "Software Engineer with hands-on experience architecting and deploying production-ready applications across AI/ML pipelines, distributed systems, and modern web platforms. Experienced in on-prem LLM deployment (Gemma 3 27B on NVIDIA DGX Spark), distributed rate limiting (nextlimiter on npm), automated data pipelines with pandas and Gemini API, and building high-performance web applications with React, TypeScript, Next.js, and FastAPI.",
+  avatarUrl: "/Mypicture.png",
   skills: [
     "Java",
+    "Python",
     "JavaScript",
     "TypeScript",
-    "Python",
     "SQL",
-    "ReactJS",
-    "NextJS",
-    "TailwindCSS",
+    "LLMs",
+    "Prompt Engineering",
+    "Agentic AI",
+    "Multi-Stage LLM Pipelines",
+    "NLP",
+    "Ollama",
+    "Gemini API",
+    "pandas",
+    "FastAPI",
     "Django",
-    "Django REST Framework",
-    "Git",
+    "Node.js",
+    "REST APIs",
+    "React.js",
+    "Next.js",
+    "Tailwind CSS",
+    "HTML",
+    "CSS",
+    "MySQL",
+    "SQLite",
+    "Redis",
     "GitHub",
     "Vercel",
-    "Netlify",
-    "PythonAnywhere",
-    "AWS",
-    "Figma",
-    "PostgreSQL",
-    "MySQL"
+    "Postman",
+    "Data Structures & Algorithms",
+    "Object-Oriented Programming",
+    "DBMS"
   ],
+  skillsByCategory: {
+    "Languages": ["Java", "Python", "JavaScript", "TypeScript", "SQL"],
+    "AI & ML": [
+      "LLMs",
+      "Prompt Engineering",
+      "Agentic AI",
+      "Multi-Stage LLM Pipelines",
+      "NLP",
+      "Ollama",
+      "Gemini API",
+      "pandas"
+    ],
+    "Backend & APIs": ["FastAPI", "Django", "Node.js", "REST APIs"],
+    "Frontend": ["React.js", "Next.js", "Tailwind CSS", "HTML", "CSS"],
+    "Databases": ["MySQL", "SQLite", "Redis"],
+    "Tools": ["GitHub", "Vercel", "Postman"],
+    "CS Fundamentals": [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "DBMS"
+    ]
+  },
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
   ],
   contact: {
     email: "abhishek.ck3110@gmail.com",
-    tel: "",
+    tel: "6361067517",
     social: {
       GitHub: {
         name: "GitHub",
@@ -48,8 +82,14 @@ export const DATA = {
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/abhishekck/",
+        url: "https://www.linkedin.com/in/abhisheckck/",
         icon: Icons.linkedin,
+        navbar: true,
+      },
+      LeetCode: {
+        name: "LeetCode",
+        url: "https://leetcode.com/u/aabhishek31/",
+        icon: Icons.leetcode,
         navbar: true,
       },
       X: {
@@ -66,7 +106,7 @@ export const DATA = {
       },
       email: {
         name: "Send Email",
-        url: "#",
+        url: "mailto:abhishek.ck3110@gmail.com",
         icon: Icons.email,
         navbar: false,
       },
@@ -76,47 +116,47 @@ export const DATA = {
   work: [
     {
       company: "Taranova Solutions Private Limited",
-      badges: [],
+      badges: ["Python", "FastAPI", "LLMs", "Prompt Engineering", "NLP", "pdfplumber", "REST APIs"],
       href: "#",
-      location: "On-site",
-      title: "Software Engineering Intern",
+      location: "Bangalore, Karnataka (On-site)",
+      title: "Software Engineer Intern",
       logoUrl: "/taranova.png",
-      start: "April 2026",
+      start: "Apr 2026",
       end: "May 2026",
       description:
-        "• Autonomous LLM Workflows & Integration: Engineered an autonomous, multi-agent LLM workflow using FastAPI, Django, and NLP feature engineering for scanned PDF invoice classification and metadata tagging, automating structured JSON synchronization to Tally with 100% GSTN schema compliance.\n• Model Fine-Tuning & Performance Optimization: Self-hosted and fine-tuned Gemma 3 (27B) on an on-prem NVIDIA DGX Spark, cutting per-invoice data validation latency from 9s to 2s while eliminating paid API dependencies and establishing robust backend ingestion pipelines.",
+        "• Conducted **domain research** on Indian GST rules and Tally workflows to define data requirements before building a **multi-stage document processing pipeline** — orchestrating a **modular LLM workflow** (**FastAPI**, **Django**) with **pdfplumber** to extract fields from **unstructured PDF invoices** and variable-schema Excel files, normalising layouts into a canonical **JSON schema**.\n\n• Deployed and **prompt-engineered** a self-hosted **Gemma 3 (27B)** LLM on an on-prem **NVIDIA DGX Spark** to extract and validate invoice metadata (GSTIN, HSN codes, tax heads) against **GST rules**, cutting per-invoice latency from **9s to 2s**.\n\n• Engineered an **entity-matching stage** resolving extracted parties, tax heads, and stock items against a synced master-data catalogue — applying **text normalisation** and **similarity matching** to auto-tag records, detect duplicates, and flag unmatched entries for review.",
     },
     {
       company: "Refurbo",
-      badges: [],
+      badges: ["React", "TypeScript", "Tailwind CSS", "Git"],
       href: "https://refurbo.in/",
       location: "Remote",
-      title: "Software Engineering Intern",
+      title: "Software Engineer Intern",
       logoUrl: "/refurbo.png",
-      start: "January 2026",
-      end: "March 2026",
+      start: "Jan 2026",
+      end: "Mar 2026",
       description:
-        "• Modular UI Component Architecture: Developed a responsive React, TypeScript, and Tailwind CSS component library across 10+ production screens, implementing high-performance image features that directly reduced checkout drop-off rates.\n• State Management & Code Reliability: Hardened application state management and error boundaries to eliminate rendering failures, maintaining a zero-defect pull request (PR) record across cross-device deployments using Git.",
+        "• Built a modular, responsive **React** and **TypeScript** component library adopted across **10+ production screens**.\n\n• Implemented a high-performance **Image Zoom** feature using **Tailwind CSS**, directly reducing checkout drop-off rates.\n\n• Hardened **state management** with proper loading, error, and empty-state handling, maintaining a **zero-defect PR record** via **Git**.",
     },
     {
       company: "Unacademy",
       href: "https://unacademy.com/",
-      badges: [],
-      location: "On-site",
+      badges: ["Python", "pandas", "YouTube Data API v3", "BeautifulSoup", "Gemini API", "SQL"],
+      location: "Bangalore, Karnataka (On-site)",
       title: "Operations Analyst Intern",
       logoUrl: "/Unacademy.png",
       start: "June 2025",
-      end: "August 2025",
+      end: "Aug 2025",
       description:
-        "• Process Automation & REST APIs: Architected a Flask REST API synchronized with Google Apps Script to automate internal reporting workflows, achieving a 95%+ reduction in manual operational processing time alongside Figma UI/UX prototyping.\n• Data Extraction & Competitive Intelligence: Built a scalable Python data extraction and scraping pipeline to collect and analyze metadata from 500+ competitor streams, delivering critical market distribution insights for marketing campaigns.",
+        "• Built a **Python** data pipeline (**YouTube Data API v3**, **BeautifulSoup**, **pandas**) to extract and analyse weekly competitor channel metrics, driving a ranking improvement from **5th to 2nd position** over 5 weeks.\n\n• Fed competitor data into **Gemini API** prompts for **AI-driven analysis** with structured output, enabling data-driven content decisions at scale.\n\n• Built an **automation script** to pull Google Form response data, auto-fill and validate exam results on the portal, cutting per-student processing time from **~30–35s to ~8–10s**.",
     },
   ],
   education: [
     {
-      school: "CMR University",
-      href: "",
-      degree: "Bachelor of Technology in Information Technology — GPA: 7.9 / 10.0",
-      logoUrl: "/cmru.png",
+      school: "CMR University (CMRU)",
+      href: "https://www.cmr.edu.in/",
+      degree: "Bachelor of Technology — Information Technology — GPA: 7.9 / 10.0",
+      logoUrl: "/cmr_university_logo.png",
       start: "July 2023",
       end: "May 2027",
     },
@@ -139,50 +179,24 @@ export const DATA = {
   ],
   projects: [
     {
-      title: "MotoKids Toys",
-      href: "https://github.com/samiksha0shukla/context-memory",
-      //dates: "2024 - Present",
+      title: "nextlimiter — Distributed Rate Limiting Library",
+      href: "https://npmjs.com/package/nextlimiter",
       active: true,
       description:
-        "Built a full-stack e-commerce platform for Motoikids Toys with Next.js and Django, deployed on PythonAnywhere with secure API-driven product management. Implemented Razorpay payment integration and Shiprocket logistics to enable end-to-end automated checkout and fulfillment.",
+        "Published a production-ready **Node.js rate-limiting library** on **npm** implementing **5 distinct algorithms** (sliding window, token bucket, and more). Engineered a **Redis-backed atomic Lua script** store to eliminate race conditions across distributed server instances. Integrated **Prometheus metrics** for real-time observability and automated **CI/CD** pipelines via **GitHub Actions**.",
       technologies: [
-        "Python",
-        "Django",
-        "PostgreSQL",
-        "NextJS",
-        "Razorpay",
-        "Shiprocket",
-        "PythonAnywhere",
-      ],
-      links: [
-        {
-          type: "Website",
-          href: "https://www.motokidstoys.com/",
-          icon: <Icons.globe className="size-3" />,
-        },
-
-      ],
-      image: "",
-      video: "",
-    },
-    {
-      title: "nextlimiter",
-      href: "https://github.com/abhishekck31/nextlimiter",
-      //dates: "2024",
-      active: true,
-      description:
-        "nextlimiter is a rate-limiting middleware for Next.js applications. It provides a simple and efficient way to implement rate limiting to protect your API routes from abuse. Published on npm with 25+ weekly downloads.",
-      technologies: [
-        "TypeScript",
-        "NextJS",
         "Node.js",
+        "Redis",
+        "Lua Scripts",
+        "Prometheus",
+        "GitHub Actions",
+        "TypeScript",
         "npm",
-        "GitHub",
       ],
       links: [
         {
           type: "NPM",
-          href: "https://www.npmjs.com/package/nextlimiter",
+          href: "https://npmjs.com/package/nextlimiter",
           icon: <Icons.globe className="size-3" />,
         },
         {
@@ -193,34 +207,60 @@ export const DATA = {
       ],
       image: "",
       video: "",
-    }
+    },
+    {
+      title: "Full-Stack E-Commerce Platform with Automated Fulfillment",
+      href: "https://www.motokidstoys.com",
+      active: true,
+      description:
+        "Architected a full-stack e-commerce platform using **Next.js**, **Django REST Framework**, and **SQLite**. Integrated **Razorpay** and **Shiprocket APIs** to auto-generate shipments on payment confirmation, cutting **manual order placement by ~90%**. Optimized **SQLite** indexing to boost **search/query throughput by 4x** and automated customer notifications, cutting **manual communication overhead by ~80%**.",
+      technologies: [
+        "Next.js",
+        "Django REST Framework",
+        "SQLite",
+        "Razorpay",
+        "Shiprocket API",
+        "Python",
+      ],
+      links: [
+        {
+          type: "Website",
+          href: "https://www.motokidstoys.com",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
   ],
   hackathons: [
     {
-      title: "Alog-Rythm 2.0",
-      dates: "March 27th - 28th, 2025",
+      title: "Alog-Rythm 2.0 (2025)",
+      dates: "March 2025",
       location: "Gopalan College of Engineering",
       description:
-        "From an idea to execution, Prajwal G and I built something that stood out—and it paid off! 🏆 We clinched 1st place in the Web Crafting - Alog-Rythm2.0 event at Gopalan College of Engineering! The competition was intense, and every team brought their A-game, but our approach to design, functionality, and execution helped us take the top spot.A great experience, a solid learning curve, and a reminder that clean, well-thought-out development always wins.",
-      image: "/",
-      links: [],
-    },
-    {
-      title: "SJCIT CSE Technotsava Hackathon",
-      dates: "April 3rd 2025",
-      location: "SJCIT Chikkaballapura",
-      description:
-        "We secured 1st place in the Frontend Track at the SJCIT CSE Technotsava Hackathon! Me and Prajwal G built Timeline Explorer, a tool designed to visualize events and milestones in a clean, interactive way. It was exciting to bring the idea to life within the hackathon timeframe and see it resonate with the judges.",
-      image: "/",
+        "Secured **1st place** in the Web Crafting Track at Gopalan College of Engineering. Built a standout, high-performance web platform praised for clean design aesthetics, responsive execution, and solid architecture under intense hackathon competition.",
+      image: "",
       win: "1st Place Winner",
       links: [],
     },
     {
-      title: "Silver Spectrum Techfest-2025",
+      title: "Silver Spectrum Techfest 2025",
       dates: "October 2025",
       location: "New Horizon College of Engineering",
       description:
-        "Won 1st Place and a cash prize of ₹10,000 in the Coding Contest at Silver Spectrum Techfest-2025!It was a fantastic challenge that tested our problem-solving skills. A huge thank you to New Horizon College of Engineering for the opportunity!",
+        "Secured **1st place + ₹10,000 cash prize** in the Coding Contest at New Horizon College of Engineering, excelling in algorithms, data structures, and rapid problem solving.",
+      image: "",
+      win: "1st Place Winner",
+      links: [],
+    },
+    {
+      title: "Technotsava 8.0",
+      dates: "April 2025",
+      location: "SJCIT Chikkaballapura",
+      description:
+        "Secured **1st place** in the Frontend Track at the SJCIT CSE Hackathon. Architected Timeline Explorer, an interactive visualization tool for events and milestones in a clean, intuitive interface.",
+      image: "",
       win: "1st Place Winner",
       links: [],
     },
